@@ -1,0 +1,65 @@
+name: application_hydrogami
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.5
+  mysql1: ^0.20.0
+  mqtt_client: ^10.0.0
+  logging: ^1.2.0
+  fl_chart: ^0.68.0
+  gap: ^3.0.1
+  carousel_slider: ^4.2.0
+  google_fonts: ^4.0.4
+  intl: ^0.19.0
+  salomon_bottom_bar: ^3.3.2
+  http: ^1.1.0
+  shared_preferences: ^2.2.0
+  percent_indicator: ^4.2.2
+  geolocator: ^10.0.0
+  geocoding: ^2.1.0
+  youtube_player_flutter: ^9.1.1
+  flutter_inappwebview: ^6.0.0
+  url_launcher: ^6.1.7
+  confetti: ^0.8.0
+  simple_animations: ^5.2.0
+  flutter_spin_wheel_menu: ^0.0.4
+  image_picker: ^1.0.4
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.9
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/logo.png
+  branding: null
+  android: true
+  ios: true
+  web: false
+
+  android_gravity: center
+  ios_content_mode: center
+  fullscreen: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+
