@@ -794,8 +794,8 @@ class _BerandaPageState extends State<BerandaPage> {
 
       try {
         List<Placemark> placemarks = await placemarkFromCoordinates(
-            position.latitude, position.longitude,
-            localeIdentifier: "id_ID");
+            position.latitude, position.longitude
+	);
 
         if (placemarks.isNotEmpty) {
           _processPlacemark(placemarks.first, position);

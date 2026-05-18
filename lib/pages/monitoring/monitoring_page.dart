@@ -985,7 +985,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                             index < maxDataPoints &&
                             index % 2 == 0) {
                           return SideTitleWidget(
-                            axisSide: meta.axisSide,
+			    meta: meta,
                             child: Text(
                               index.toString(),
                               style: GoogleFonts.poppins(
@@ -1005,10 +1005,10 @@ class _MonitoringPageState extends State<MonitoringPage> {
                       reservedSize: 50,
                       interval: 20,
                       getTitlesWidget: (value, meta) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: SideTitleWidget(
-                            axisSide: meta.axisSide,
+                        return SideTitleWidget(
+			  meta: meta,
+			  child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Text(
                               value.toInt().toString(),
                               style: GoogleFonts.poppins(
@@ -1168,7 +1168,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                             index < maxDataPoints &&
                             index % 2 == 0) {
                           return SideTitleWidget(
-                            axisSide: meta.axisSide,
+			    meta: meta,
                             child: Text(
                               index.toString(),
                               style: GoogleFonts.poppins(
@@ -1189,7 +1189,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                       interval: interval,
                       getTitlesWidget: (value, meta) {
                         return SideTitleWidget(
-                          axisSide: meta.axisSide,
+			  meta: meta,
                           child: Text(
                             value.toInt().toString(),
                             style: GoogleFonts.poppins(

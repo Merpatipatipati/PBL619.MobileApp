@@ -13,17 +13,17 @@ dependencies:
   mysql1: ^0.20.0
   mqtt_client: ^10.0.0
   logging: ^1.2.0
-  fl_chart: ^0.68.0
+  fl_chart: ^1.2.0
   gap: ^3.0.1
-  carousel_slider: ^4.2.0
-  google_fonts: ^4.0.4
-  intl: ^0.19.0
+  carousel_slider: ^5.1.2
+  google_fonts: ^8.1.0
+  intl: ^0.20.2
   salomon_bottom_bar: ^3.3.2
   http: ^1.1.0
   shared_preferences: ^2.2.0
   percent_indicator: ^4.2.2
-  geolocator: ^10.0.0
-  geocoding: ^2.1.0
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
   youtube_player_flutter: ^9.1.1
   flutter_inappwebview: ^6.0.0
   url_launcher: ^6.1.7
@@ -36,8 +36,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.3.9
 
 
