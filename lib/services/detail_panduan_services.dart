@@ -6,7 +6,7 @@ class DetailPanduanService {
   static Future<Panduan?> fetchPanduanDetail(int idPanduan) async {
     try {
       final response = await http
-          .get(Uri.parse('http://192.168.56.100/api/user/panduan/$idPanduan'));
+          .get(Uri.parse('http://192.168.56.100:8000/api/user/panduan/$idPanduan'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];

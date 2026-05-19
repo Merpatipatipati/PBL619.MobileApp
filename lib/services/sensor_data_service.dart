@@ -4,7 +4,7 @@ import '../models/sensor_data_model.dart';
 
 class SensorDataService {
   static const String _baseUrl =
-      'http://192.168.56.100/api'; // Ganti dengan URL Laravel Anda
+      'http://192.168.56.100:8000/api'; // Ganti dengan URL Laravel Anda
 
   Future<bool> sendSensorData(SensorData data) async {
     try {
