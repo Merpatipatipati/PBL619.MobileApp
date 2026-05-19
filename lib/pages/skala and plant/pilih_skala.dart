@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'konfirmasi_skala_page.dart'; // Pastikan Anda mengimpor halaman ini
+import 'konfirmasi_skala_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PilihSkalaPage extends StatefulWidget {
@@ -40,8 +40,6 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                 ),
               ),
               const SizedBox(height: 30),
-
-              // Kartu High
               buildCard(
                 'High',
                 '20-30 pipa',
@@ -51,21 +49,18 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                 'Memerlukan pemantauan dan perawatan yang lebih intensif',
                 const Color.fromARGB(255, 16, 199, 101),
                 () async {
-                  // Simpan pilihan skala terlebih dahulu
                   await saveScaleChoice('High');
-
-                  // Kemudian navigasi ke halaman konfirmasi
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const KonfirmasiSkalaPage(),
+                      builder: (context) => const KonfirmasiSkalaPage(
+                        scaleName: 'High',
+                      ),
                     ),
                   );
                 },
               ),
               const SizedBox(height: 20),
-
-              // Kartu Medium
               buildCard(
                 'Medium',
                 '10-20 pipa',
@@ -75,21 +70,18 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                 'Pengelolaan yang lebih ringan namun tetap butuh pemantauan rutin',
                 const Color.fromARGB(255, 16, 199, 101),
                 () async {
-                  // Simpan pilihan skala terlebih dahulu
                   await saveScaleChoice('Medium');
-
-                  // Kemudian navigasi ke halaman konfirmasi
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const KonfirmasiSkalaPage(),
+                      builder: (context) => const KonfirmasiSkalaPage(
+                        scaleName: 'Medium',
+                      ),
                     ),
                   );
                 },
               ),
               const SizedBox(height: 20),
-
-              // Kartu Easy
               buildCard(
                 'Easy',
                 '5-10 pipa',
@@ -99,19 +91,17 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                 'Sangat mudah, bisa dikelola dengan perawatan minim',
                 const Color.fromARGB(255, 16, 199, 101),
                 () async {
-                  // Simpan pilihan skala terlebih dahulu
                   await saveScaleChoice('Easy');
-
-                  // Kemudian navigasi ke halaman konfirmasi
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const KonfirmasiSkalaPage(),
+                      builder: (context) => const KonfirmasiSkalaPage(
+                        scaleName: 'Easy',
+                      ),
                     ),
                   );
                 },
               ),
-
               const SizedBox(height: 40),
             ],
           ),
@@ -168,7 +158,7 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                           title,
                           style: TextStyle(
                             color: borderColor,
-                            fontWeight: FontWeight.bold, // Membuat font bold
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -177,46 +167,24 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                 ],
               ),
               const SizedBox(height: 10),
-              Text(
-                '• Jumlah Pipa: $pipa',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF20934E),
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              Text(
-                '• Jumlah Benih: $benih',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF20934E),
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              Text(
-                '• Cakupan Area: $area',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF20934E),
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              Text(
-                '• Kebutuhan Air & Nutrisi: $nutrisi',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF20934E),
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              Text(
-                '• Pengelolaan: $pengelolaan',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF20934E),
-                ),
-                textAlign: TextAlign.justify,
-              ),
+              Text('• Jumlah Pipa: $pipa',
+                  style:
+                      const TextStyle(fontSize: 12, color: Color(0xFF20934E))),
+              Text('• Jumlah Benih: $benih',
+                  style:
+                      const TextStyle(fontSize: 12, color: Color(0xFF20934E))),
+              Text('• Cakupan Area: $area',
+                  style:
+                      const TextStyle(fontSize: 12, color: Color(0xFF20934E)),
+                  textAlign: TextAlign.justify),
+              Text('• Kebutuhan Air & Nutrisi: $nutrisi',
+                  style:
+                      const TextStyle(fontSize: 12, color: Color(0xFF20934E)),
+                  textAlign: TextAlign.justify),
+              Text('• Pengelolaan: $pengelolaan',
+                  style:
+                      const TextStyle(fontSize: 12, color: Color(0xFF20934E)),
+                  textAlign: TextAlign.justify),
             ],
           ),
         ),

@@ -3,7 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:application_hydrogami/pages/skala%20and%20plant/pilih_skala.dart';
 
 class KonfirmasiPilihPage extends StatefulWidget {
-  const KonfirmasiPilihPage({super.key});
+  final String plantName;
+  final String plantImage;
+
+  const KonfirmasiPilihPage({
+    super.key,
+    required this.plantName,
+    required this.plantImage,
+  });
 
   @override
   State<KonfirmasiPilihPage> createState() => _KonfirmasiPilihPageState();
@@ -37,7 +44,7 @@ class _KonfirmasiPilihPageState extends State<KonfirmasiPilihPage> {
                 textAlign: TextAlign.center,
               ),
               Text(
-                'Pakcoy?',
+                '${widget.plantName}?',
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   color: const Color.fromARGB(232, 8, 166, 82),
@@ -47,7 +54,7 @@ class _KonfirmasiPilihPageState extends State<KonfirmasiPilihPage> {
               ),
               const SizedBox(height: 10),
               Image.asset(
-                'assets/pakcoy2.png',
+                widget.plantImage,
                 width: 400,
                 height: 500,
                 fit: BoxFit.cover,
@@ -56,10 +63,9 @@ class _KonfirmasiPilihPageState extends State<KonfirmasiPilihPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Tombol Tidak
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context); // Kembali ke halaman sebelumnya
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -92,10 +98,8 @@ class _KonfirmasiPilihPageState extends State<KonfirmasiPilihPage> {
                       ],
                     ),
                   ),
-                  // Tombol Ya dengan ikon di sebelah kanan
                   ElevatedButton(
                     onPressed: () {
-                      // Navigasi ke halaman berikutnya
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -124,8 +128,7 @@ class _KonfirmasiPilihPageState extends State<KonfirmasiPilihPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 10), // Jarak antara teks dan ikon
-
+                        const SizedBox(width: 10),
                         Image.asset(
                           'assets/ic_next.png',
                           width: 20,

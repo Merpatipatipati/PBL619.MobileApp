@@ -48,7 +48,8 @@ class _BerandaPageState extends State<BerandaPage> {
   final PageController _pageController = PageController();
   Timer? _carouselTimer;
   Timer? _dataUpdateTimer;
-
+  String _selectedPlant = 'Pakcoy';
+  String _selectedScale = 'Easy';
   double _nutrientLevel = 78.3;
   double _waterConsumption = 11.87;
   double _growthPercentage = 0.30;
@@ -492,6 +493,8 @@ class _BerandaPageState extends State<BerandaPage> {
           _hasStartedPlanting = savedPlantingStatus;
           _hasCompletedSetup = savedSetupStatus;
           _growthPercentage = savedGrowthPercentage; // Set growthPercentage
+          _selectedPlant = prefs.getString('selected_plant') ?? 'Pakcoy';
+          _selectedScale = prefs.getString('selected_scale') ?? 'Easy';
           if (startDateString != null) {
             _plantStartDate = DateTime.parse(startDateString);
           }
@@ -794,8 +797,7 @@ class _BerandaPageState extends State<BerandaPage> {
 
       try {
         List<Placemark> placemarks = await placemarkFromCoordinates(
-            position.latitude, position.longitude
-	);
+            position.latitude, position.longitude);
 
         if (placemarks.isNotEmpty) {
           _processPlacemark(placemarks.first, position);
@@ -1128,7 +1130,6 @@ class _BerandaPageState extends State<BerandaPage> {
     _savePlantData();
   }
 
-
   // Show reset plant dialog
   void _showResetPlantDialog() {
     showDialog(
@@ -1418,7 +1419,8 @@ class _BerandaPageState extends State<BerandaPage> {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color:const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                        color: const Color.fromARGB(255, 8, 143, 78)
+                            .withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: SingleChildScrollView(
@@ -1443,7 +1445,8 @@ class _BerandaPageState extends State<BerandaPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => GamifikasiProgresPage()),
+                                      builder: (context) =>
+                                          GamifikasiProgresPage()),
                                 );
                               },
                               child: _buildCircleMenuWithLabel(
@@ -1484,7 +1487,8 @@ class _BerandaPageState extends State<BerandaPage> {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                        color: const Color.fromARGB(255, 8, 143, 78)
+                            .withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: IntrinsicHeight(
@@ -1673,8 +1677,6 @@ class _BerandaPageState extends State<BerandaPage> {
       ),
     );
   }
-
- 
 
   // Location and Weather Widget
   Widget _buildLocationWeatherWidget() {
@@ -1923,10 +1925,10 @@ class _BerandaPageState extends State<BerandaPage> {
               children: [
                 Text(
                   !_hasStartedPlanting
-                      ? 'Tanaman Pakcoy'
+                      ? 'Tanaman $_selectedPlant'
                       : _plantAge >= 50
                           ? 'Status Tanaman'
-                          : 'Umur Pakcoy',
+                          : 'Umur $_selectedPlant',
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.black54,
@@ -2289,7 +2291,7 @@ class _BerandaPageState extends State<BerandaPage> {
                 height: 8,
                 decoration: BoxDecoration(
                   color: _currentSlide == index
-                      ?const Color.fromARGB(255, 8, 143, 78)
+                      ? const Color.fromARGB(255, 8, 143, 78)
                       : Colors.grey.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(4),
                 ),
@@ -2452,7 +2454,7 @@ class _BerandaPageState extends State<BerandaPage> {
                 label: 'Akun',
               ),
             ],
-            selectedItemColor:const Color.fromARGB(255, 8, 143, 78),
+            selectedItemColor: const Color.fromARGB(255, 8, 143, 78),
             unselectedItemColor: Colors.grey[400],
             selectedLabelStyle: GoogleFonts.poppins(
               fontSize: 12,
