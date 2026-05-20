@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart' as launcher;
 
 class DetailPanduanPanenPage extends StatefulWidget {
   final int idPanduan;
-  const DetailPanduanPanenPage({super.key, required this.idPanduan});
+  DetailPanduanPanenPage({super.key, required this.idPanduan});
 
   @override
   State<DetailPanduanPanenPage> createState() => _DetailPanduanPanenPageState();
@@ -21,11 +21,15 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
   int _bottomNavCurrentIndex = 2;
   bool _isPlayButtonPressed = false;
 
-
   @override
   void initState() {
     super.initState();
     panduanDetail = DetailPanduanService.fetchPanduanDetail(widget.idPanduan);
+  }
+
+  String? _extractYoutubeId(String? url) {
+    if (url == null || url.isEmpty) return null;
+    return Uri.tryParse(url)?.queryParameters['v'];
   }
 
   @override
@@ -40,13 +44,12 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60,
                     height: 60,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        const Color(0xFF29CC74),
-                      ),
+                          const Color(0xFF29CC74)),
                       strokeWidth: 3,
                     ),
                   ),
@@ -75,28 +78,18 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.error_outline_rounded,
-                      size: 48,
-                      color: Colors.red.shade400,
-                    ),
+                    Icon(Icons.error_outline_rounded,
+                        size: 48, color: Colors.red.shade400),
                     const SizedBox(height: 12),
-                    Text(
-                      'Gagal memuat data panduan',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red.shade700,
-                      ),
-                    ),
+                    Text('Gagal memuat data panduan',
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.red.shade700)),
                     const SizedBox(height: 8),
-                    Text(
-                      'Silakan coba lagi nanti',
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: Colors.red.shade600,
-                      ),
-                    ),
+                    Text('Silakan coba lagi nanti',
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, color: Colors.red.shade600)),
                   ],
                 ),
               ),
@@ -104,91 +97,53 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
           }
 
           final panduan = snapshot.data!;
+          final videoId = _extractYoutubeId(panduan.video);
+          final thumbnailUrl = videoId != null
+              ? 'https://img.youtube.com/vi/$videoId/maxresdefault.jpg'
+              : null;
+
           return CustomScrollView(
             slivers: [
-              // Hero Image 
               SliverAppBar(
                 expandedHeight: 280,
                 pinned: true,
                 elevation: 0,
                 backgroundColor: const Color(0xFF24D17E),
                 leading: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white, 
-                    size: 24,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PanduanPage()),
-                    );
-                  },
+                  icon: const Icon(Icons.arrow_back,
+                      color: Colors.white, size: 24),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const PanduanPage())),
                 ),
-                title: Row(
-                  children: [
-                    Text(
-                      'Detail Panduan',
-                      style: GoogleFonts.poppins(
+                title: Text('Detail Panduan',
+                    style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white, 
-                      ),
-                    ),
-                  ],
-                ),
+                        color: Colors.white)),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      // Main Hero Image 
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              const Color(0xFF29CC74).withOpacity(0.8),
-                              const Color(0xFF20B863).withOpacity(0.9),
-                            ],
-                          ),
-                        ),
-                        child: panduan.gambar != null
-                            ? ClipRect(
-                                child: Transform.scale(
-                                  scale: 1.0, 
-                                  child: Image.asset(
-                                    'assets/panenPakcoy.jpg',
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    alignment: Alignment.center,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      const Color(0xFF29CC74),
-                                      const Color(0xFF20B863),
-                                    ],
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.eco_rounded,
-                                    size: 80,
-                                    color: Colors.white.withOpacity(0.7),
-                                  ),
-                                ),
+                      // ✅ Hero image: network dari backend, fallback ke local asset
+                      panduan.gambar != null
+                          ? Image.network(
+                              panduan.gambar!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder: (_, __, ___) => Image.asset(
+                                'assets/panenPakcoy.jpg',
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
                               ),
-                      ),
-
-                      // gradient overlay
+                            )
+                          : Image.asset(
+                              'assets/panenPakcoy.jpg',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
                       Container(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
@@ -205,8 +160,6 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                   ),
                 ),
               ),
-
-              // Content Section
               SliverToBoxAdapter(
                 child: Container(
                   decoration: BoxDecoration(
@@ -218,29 +171,24 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                   ),
                   child: Column(
                     children: [
-                      // Title Section 
                       Container(
                         padding: const EdgeInsets.fromLTRB(28, 36, 28, 28),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Category badge with modern styling
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0xFF29CC74).withOpacity(0.15),
-                                    const Color(0xFF20B863).withOpacity(0.15),
-                                  ],
-                                ),
+                                gradient: LinearGradient(colors: [
+                                  const Color(0xFF29CC74).withOpacity(0.15),
+                                  const Color(0xFF20B863).withOpacity(0.15),
+                                ]),
                                 borderRadius: BorderRadius.circular(24),
                                 border: Border.all(
-                                  color:
-                                      const Color(0xFF29CC74).withOpacity(0.4),
-                                  width: 1.5,
-                                ),
+                                    color: const Color(0xFF29CC74)
+                                        .withOpacity(0.4),
+                                    width: 1.5),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -249,46 +197,34 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                     width: 8,
                                     height: 8,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          const Color(0xFF29CC74),
-                                          const Color(0xFF20B863),
-                                        ],
-                                      ),
+                                      gradient: const LinearGradient(colors: [
+                                        Color(0xFF29CC74),
+                                        Color(0xFF20B863)
+                                      ]),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  Text(
-                                    'PANDUAN HIDROPONIK',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF29CC74),
-                                      letterSpacing: 1.0,
-                                    ),
-                                  ),
+                                  Text('PANDUAN HIDROPONIK',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700,
+                                          color: const Color(0xFF29CC74),
+                                          letterSpacing: 1.0)),
                                 ],
                               ),
                             ),
-
                             const SizedBox(height: 20),
-
-                            // Main Title 
                             Text(
                               panduan.judul ?? 'Judul tidak tersedia.',
                               style: GoogleFonts.poppins(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w800,
-                                color: const Color(0xFF1A202C),
-                                height: 1.15,
-                                letterSpacing: -0.8,
-                              ),
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w800,
+                                  color: const Color(0xFF1A202C),
+                                  height: 1.15,
+                                  letterSpacing: -0.8),
                             ),
-
                             const SizedBox(height: 20),
-
-                            // Reading time 
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 10),
@@ -297,10 +233,9 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.06),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
-                                  ),
+                                      color: Colors.black.withOpacity(0.06),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4))
                                 ],
                               ),
                               child: Row(
@@ -309,39 +244,29 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                   Container(
                                     padding: const EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          const Color(0xFF29CC74)
-                                              .withOpacity(0.2),
-                                          const Color(0xFF20B863)
-                                              .withOpacity(0.2),
-                                        ],
-                                      ),
+                                      gradient: LinearGradient(colors: [
+                                        const Color(0xFF29CC74)
+                                            .withOpacity(0.2),
+                                        const Color(0xFF20B863)
+                                            .withOpacity(0.2),
+                                      ]),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: Icon(
-                                      Icons.access_time_rounded,
-                                      size: 16,
-                                      color: const Color(0xFF29CC74),
-                                    ),
+                                    child: const Icon(Icons.access_time_rounded,
+                                        size: 16, color: Color(0xFF29CC74)),
                                   ),
                                   const SizedBox(width: 10),
-                                  Text(
-                                    'Estimasi membaca 5 menit',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 13,
-                                      color: const Color(0xFF4A5568),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  Text('Estimasi membaca 5 menit',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 13,
+                                          color: const Color(0xFF4A5568),
+                                          fontWeight: FontWeight.w600)),
                                 ],
                               ),
                             ),
                           ],
                         ),
                       ),
-
-                      // Main Content Card 
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 28),
                         padding: const EdgeInsets.all(32),
@@ -350,23 +275,20 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.06),
-                              spreadRadius: 0,
-                              blurRadius: 24,
-                              offset: const Offset(0, 12),
-                            ),
+                                color: Colors.black.withOpacity(0.06),
+                                spreadRadius: 0,
+                                blurRadius: 24,
+                                offset: const Offset(0, 12)),
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
-                              spreadRadius: 0,
-                              blurRadius: 12,
-                              offset: const Offset(0, 6),
-                            ),
+                                color: Colors.black.withOpacity(0.04),
+                                spreadRadius: 0,
+                                blurRadius: 12,
+                                offset: const Offset(0, 6)),
                           ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // YouTube Video Player Section
                             Container(
                               width: double.infinity,
                               height: 200,
@@ -374,17 +296,16 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
-                                  ),
+                                      color: Colors.black.withOpacity(0.1),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4))
                                 ],
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
                                 child: Stack(
                                   children: [
-                                    // YouTube Thumbnail
+                                    // ✅ Thumbnail dinamis dari panduan.video
                                     Container(
                                       width: double.infinity,
                                       height: double.infinity,
@@ -400,21 +321,22 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                           ],
                                         ),
                                       ),
-                                      child: Image.network(
-                                        'https://img.youtube.com/vi/0QP74YA3Qo4/maxresdefault.jpg',
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  const Color(0xFF29CC74),
-                                                  const Color(0xFF20B863),
-                                                ],
+                                      child: thumbnailUrl != null
+                                          ? Image.network(
+                                              thumbnailUrl,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (_, __, ___) =>
+                                                  Center(
+                                                child: Icon(
+                                                  Icons
+                                                      .play_circle_outline_rounded,
+                                                  size: 64,
+                                                  color: Colors.white
+                                                      .withOpacity(0.9),
+                                                ),
                                               ),
-                                            ),
-                                            child: Center(
+                                            )
+                                          : Center(
                                               child: Icon(
                                                 Icons
                                                     .play_circle_outline_rounded,
@@ -423,12 +345,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                                     .withOpacity(0.9),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
                                     ),
-
-                                    // Dark overlay 
                                     Container(
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
@@ -441,36 +358,24 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                         ),
                                       ),
                                     ),
-
-                                    // Play Button and Video Info
                                     Center(
                                       child: GestureDetector(
-                                        onTapDown: (_) {
-                                          setState(() {
-                                            _isPlayButtonPressed = true;
-                                          });
-                                        },
-                                        onTapUp: (_) {
-                                          setState(() {
-                                            _isPlayButtonPressed = false;
-                                          });
-                                        },
-                                        onTapCancel: () {
-                                          setState(() {
-                                            _isPlayButtonPressed = false;
-                                          });
-                                        },
+                                        onTapDown: (_) => setState(
+                                            () => _isPlayButtonPressed = true),
+                                        onTapUp: (_) => setState(
+                                            () => _isPlayButtonPressed = false),
+                                        onTapCancel: () => setState(
+                                            () => _isPlayButtonPressed = false),
+                                        // ✅ Video URL dari panduan.video
                                         onTap: () async {
-                                          final Uri url = Uri.parse(
-                                              'https://www.youtube.com/watch?v=Y6G3eJPI69k');
-
+                                          final videoUrl = panduan.video ?? '';
+                                          if (videoUrl.isEmpty) return;
+                                          final uri = Uri.parse(videoUrl);
                                           if (await launcher
-                                              .canLaunchUrl(url)) {
-                                            await launcher.launchUrl(
-                                              url,
-                                              mode: launcher.LaunchMode
-                                                  .externalApplication,
-                                            );
+                                              .canLaunchUrl(uri)) {
+                                            await launcher.launchUrl(uri,
+                                                mode: launcher.LaunchMode
+                                                    .externalApplication);
                                           }
                                         },
                                         child: AnimatedContainer(
@@ -488,31 +393,29 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                                 BorderRadius.circular(50),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(
-                                                    _isPlayButtonPressed
-                                                        ? 0.3
-                                                        : 0.2),
-                                                blurRadius: _isPlayButtonPressed
-                                                    ? 8
-                                                    : 12,
-                                                offset: Offset(
-                                                    0,
-                                                    _isPlayButtonPressed
-                                                        ? 2
-                                                        : 4),
-                                              ),
+                                                  color: Colors.black
+                                                      .withOpacity(
+                                                          _isPlayButtonPressed
+                                                              ? 0.3
+                                                              : 0.2),
+                                                  blurRadius:
+                                                      _isPlayButtonPressed
+                                                          ? 8
+                                                          : 12,
+                                                  offset: Offset(
+                                                      0,
+                                                      _isPlayButtonPressed
+                                                          ? 2
+                                                          : 4)),
                                             ],
                                           ),
-                                          child: Icon(
-                                            Icons.play_arrow_rounded,
-                                            color: const Color(0xFF29CC74),
-                                            size: 32,
-                                          ),
+                                          child: const Icon(
+                                              Icons.play_arrow_rounded,
+                                              color: Color(0xFF29CC74),
+                                              size: 32),
                                         ),
                                       ),
                                     ),
-
-                                    // YouTube badge
                                     Positioned(
                                       top: 12,
                                       right: 12,
@@ -520,33 +423,24 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 4),
                                         decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
+                                            color: Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(4)),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Icon(
-                                              Icons.play_arrow,
-                                              color: Colors.white,
-                                              size: 12,
-                                            ),
+                                            const Icon(Icons.play_arrow,
+                                                color: Colors.white, size: 12),
                                             const SizedBox(width: 2),
-                                            Text(
-                                              'YouTube',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                            Text('YouTube',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.white)),
                                           ],
                                         ),
                                       ),
                                     ),
-
-                                    // Video duration badge 
                                     Positioned(
                                       bottom: 12,
                                       right: 12,
@@ -554,63 +448,48 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 4),
                                         decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.8),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          '5:04',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                            color:
+                                                Colors.black.withOpacity(0.8),
+                                            borderRadius:
+                                                BorderRadius.circular(4)),
+                                        child: Text('5:04',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white)),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-
                             const SizedBox(height: 24),
-
-                            // Video Title
-                            Text(
-                              'Video Panduan',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF2D3748),
-                              ),
-                            ),
-
+                            Text('Video Panduan',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF2D3748))),
                             const SizedBox(height: 8),
-
                             Text(
                               'Tonton video berikut untuk dapat memahami panduan ini dengan lebih baik.',
                               style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.w400,
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w400),
                             ),
-
                             const SizedBox(height: 32),
-
-                            // Content header 
                             Row(
                               children: [
                                 Container(
                                   width: 5,
                                   height: 28,
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                       colors: [
-                                        const Color(0xFF29CC74),
-                                        const Color(0xFF20B863),
+                                        Color(0xFF29CC74),
+                                        Color(0xFF20B863)
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(3),
@@ -618,42 +497,33 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                 ),
                                 const SizedBox(width: 16),
                                 Expanded(
-                                  child: Text(
-                                    'Langkah-langkah',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF1A202C),
-                                      letterSpacing: -0.3,
-                                    ),
-                                  ),
+                                  child: Text('Langkah-langkah',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: const Color(0xFF1A202C),
+                                          letterSpacing: -0.3)),
                                 ),
                               ],
                             ),
-
                             const SizedBox(height: 28),
-
-                            // Main content text 
                             Container(
                               padding: const EdgeInsets.symmetric(vertical: 8),
                               child: Text(
                                 panduan.deskPanduan ??
                                     'Deskripsi tidak tersedia.',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  color: const Color(0xFF2D3748),
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.9,
-                                  letterSpacing: 0.3,
-                                ),
+                                    fontSize: 16,
+                                    color: const Color(0xFF2D3748),
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.9,
+                                    letterSpacing: 0.3),
                                 textAlign: TextAlign.justify,
                               ),
                             ),
                           ],
                         ),
                       ),
-
-                      // Space
                       const SizedBox(height: 25),
                     ],
                   ),
@@ -667,96 +537,72 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
     );
   }
 
-  // Bottom Navigation Widget
   Widget _buildBottomNavigation() {
     return Container(
-      color: Colors.white, // tambahin ini biar latar belakangnya full putih
+      color: Colors.white,
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, -5))
           ],
         ),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
+              topLeft: Radius.circular(24), topRight: Radius.circular(24)),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
             onTap: (index) {
-              setState(() {
-                _bottomNavCurrentIndex = index;
-              });
-
+              setState(() => _bottomNavCurrentIndex = index);
               switch (index) {
                 case 0:
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BerandaPage()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const BerandaPage()));
                   break;
                 case 1:
                   Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const GamifikasiPage()),
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const GamifikasiPage()));
                   break;
                 case 2:
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PanduanPage()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const PanduanPage()));
                   break;
                 case 3:
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfilPage()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const ProfilPage()));
                   break;
               }
             },
             currentIndex: _bottomNavCurrentIndex,
             items: const [
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.home_rounded),
-                icon: Icon(Icons.home_outlined),
-                label: 'Beranda',
-              ),
+                  activeIcon: Icon(Icons.home_rounded),
+                  icon: Icon(Icons.home_outlined),
+                  label: 'Beranda'),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.tune_rounded),
-                icon: Icon(Icons.tune_outlined),
-                label: 'Kontrol',
-              ),
+                  activeIcon: Icon(Icons.tune_rounded),
+                  icon: Icon(Icons.tune_outlined),
+                  label: 'Kontrol'),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.book_rounded),
-                icon: Icon(Icons.book_outlined),
-                label: 'Panduan',
-              ),
+                  activeIcon: Icon(Icons.book_rounded),
+                  icon: Icon(Icons.book_outlined),
+                  label: 'Panduan'),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.person_rounded),
-                icon: Icon(Icons.person_outline_rounded),
-                label: 'Akun',
-              ),
+                  activeIcon: Icon(Icons.person_rounded),
+                  icon: Icon(Icons.person_outline_rounded),
+                  label: 'Akun'),
             ],
             selectedItemColor: const Color(0xFF24D17E),
             unselectedItemColor: Colors.grey[400],
-            selectedLabelStyle: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: GoogleFonts.poppins(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-            ),
+            selectedLabelStyle:
+                GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600),
+            unselectedLabelStyle:
+                GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w500),
             elevation: 0,
           ),
         ),

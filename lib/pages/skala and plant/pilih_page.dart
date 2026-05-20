@@ -10,6 +10,14 @@ class PilihPage extends StatefulWidget {
 }
 
 class _PilihPageState extends State<PilihPage> {
+  // Map tanaman ke asset konfirmasi
+  static const Map<String, String> _confirmationImages = {
+    'Pakcoy': 'assets/pakcoy2.png',
+    'Bayam': 'assets/bayam2.png',
+    'Sawi Hijau': 'assets/sawi_hijau2.png',
+    'Selada': 'assets/selada2.png',
+  };
+
   Future<void> savePlantChoice(String plant) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_plant', plant);
@@ -47,7 +55,6 @@ class _PilihPageState extends State<PilihPage> {
                 ),
               ),
               const SizedBox(height: 50),
-              // GridView untuk pilihan tanaman
               GridView(
                 padding: const EdgeInsets.all(0),
                 shrinkWrap: true,
@@ -73,7 +80,6 @@ class _PilihPageState extends State<PilihPage> {
     );
   }
 
-  // Widget untuk item tanaman
   Widget _buildTanamanItem(String imagePath, String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,21 +98,19 @@ class _PilihPageState extends State<PilihPage> {
           ),
         ),
         const SizedBox(height: 10),
-        // Tombol untuk nama tanaman
         ElevatedButton(
           onPressed: () async {
-            if (title == 'Pakcoy') {
-              // Simpan pilihan tanaman terlebih dahulu
-              await savePlantChoice(title);
-
-              // Kemudian navigasi ke halaman selanjutnya
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const KonfirmasiPilihPage(),
+            await savePlantChoice(title);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => KonfirmasiPilihPage(
+                  plantName: title,
+                  plantImage:
+                      _confirmationImages[title] ?? 'assets/pakcoy2.png',
                 ),
-              );
-            }
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,

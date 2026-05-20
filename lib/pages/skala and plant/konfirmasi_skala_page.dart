@@ -4,15 +4,30 @@ import 'package:application_hydrogami/pages/beranda_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class KonfirmasiSkalaPage extends StatefulWidget {
-  const KonfirmasiSkalaPage({super.key});
+  final String scaleName;
+
+  const KonfirmasiSkalaPage({
+    super.key,
+    required this.scaleName,
+  });
 
   @override
   State<KonfirmasiSkalaPage> createState() => _KonfirmasiSkalaPageState();
 }
 
 class _KonfirmasiSkalaPageState extends State<KonfirmasiSkalaPage> {
+  // Map skala ke asset gambar
+  static const Map<String, String> _scaleImages = {
+    //'High': 'assets/skala_high.png',
+    //'Medium': 'assets/skala_medium.png',
+    'Easy': 'assets/skala_easy.png',
+  };
+
   @override
   Widget build(BuildContext context) {
+    final scaleImage =
+        _scaleImages[widget.scaleName] ?? 'assets/skala_easy.png';
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -38,7 +53,7 @@ class _KonfirmasiSkalaPageState extends State<KonfirmasiSkalaPage> {
                 textAlign: TextAlign.center,
               ),
               Text(
-                'Skala Easy?',
+                'Skala ${widget.scaleName}?',
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   color: const Color.fromARGB(232, 8, 166, 82),
@@ -48,7 +63,7 @@ class _KonfirmasiSkalaPageState extends State<KonfirmasiSkalaPage> {
               ),
               const SizedBox(height: 10),
               Image.asset(
-                'assets/skala_easy.png',
+                scaleImage,
                 width: 400,
                 height: 500,
                 fit: BoxFit.cover,
@@ -57,10 +72,9 @@ class _KonfirmasiSkalaPageState extends State<KonfirmasiSkalaPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Tombol Tidak
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context); // Kembali ke halaman sebelumnya
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -93,22 +107,16 @@ class _KonfirmasiSkalaPageState extends State<KonfirmasiSkalaPage> {
                       ],
                     ),
                   ),
-                  // Tombol Ya dengan ikon di sebelah kanan
-                  // Ubah bagian onPressed tombol "Ya" di KonfirmasiSkalaPage
-
                   ElevatedButton(
                     onPressed: () async {
-                      // Simpan flag bahwa user sudah menyelesaikan setup
                       final prefs = await SharedPreferences.getInstance();
-                      String? username = prefs.getString('username');
+                      final username = prefs.getString('username');
 
                       if (username != null) {
-                        // Tandai bahwa user sudah menyelesaikan setup
-                        String userKey = '${username}_has_completed_setup';
+                        final userKey = '${username}_has_completed_setup';
                         await prefs.setBool(userKey, true);
                       }
 
-                      // Navigasi ke halaman beranda
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

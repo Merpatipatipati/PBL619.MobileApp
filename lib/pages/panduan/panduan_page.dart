@@ -29,7 +29,7 @@ class _PanduanPageState extends State<PanduanPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:const Color.fromARGB(255, 8, 143, 78),
+        backgroundColor: const Color.fromARGB(255, 8, 143, 78),
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -57,42 +57,42 @@ class _PanduanPageState extends State<PanduanPage>
                 0,
                 'assets/panduan_hidroponik.png',
                 'Panduan Merakit Sistem Hidroponik',
-                const DetailPanduanHidroponikPage(idPanduan: 1),
+                DetailPanduanHidroponikPage(idPanduan: 1),
               ),
               const SizedBox(height: 16),
               _buildPanduanCard(
                 1,
                 'assets/panduan_sensor.png',
                 'Panduan Pemasangan Sensor IoT',
-                const DetailPanduanSensorPage(idPanduan: 2),
+                DetailPanduanSensorPage(idPanduan: 2),
               ),
               const SizedBox(height: 16),
               _buildPanduanCard(
                 2,
                 'assets/tanaman_panduan.png',
                 'Panduan Pengelolaan Tanaman',
-                const DetailPanduanTanamanPage(idPanduan: 3),
+                DetailPanduanTanamanPage(idPanduan: 3),
               ),
               const SizedBox(height: 16),
               _buildPanduanCard(
                 3,
                 'assets/panduanNutrisi.jpg',
                 'Panduan Pemberian Nutrisi Tanaman Hidroponik',
-                const DetailPanduanNutrisiPage(idPanduan: 4),
+                DetailPanduanNutrisiPage(idPanduan: 4),
               ),
               const SizedBox(height: 16),
               _buildPanduanCard(
                 4,
                 'assets/phupdown.png',
                 'Panduan Pemberian pH Up dan pH Down Tanaman Hidroponik',
-                const DetailPanduanPhUpDownPage(idPanduan: 5),
+                DetailPanduanPhUpDownPage(idPanduan: 5),
               ),
               const SizedBox(height: 16),
               _buildPanduanCard(
                 5,
                 'assets/panenPakcoy.jpg',
                 'Panduan Memanen Pakcoy',
-                const DetailPanduanPanenPage(idPanduan: 6),
+                DetailPanduanPanenPage(idPanduan: 6),
               ),
               const SizedBox(height: 20), // Extra padding at bottom
             ],
@@ -187,8 +187,8 @@ class _PanduanPageState extends State<PanduanPage>
             boxShadow: [
               // Primary shadow - reduced intensity
               BoxShadow(
-                color:
-                   const Color.fromARGB(255, 8, 143, 78).withOpacity(isPressed ? 0.1 : 0.15),
+                color: const Color.fromARGB(255, 8, 143, 78)
+                    .withOpacity(isPressed ? 0.1 : 0.15),
                 spreadRadius: isPressed ? -2 : 0,
                 blurRadius: isPressed ? 15 : 25,
                 offset: Offset(0, isPressed ? 3 : 8),
@@ -253,9 +253,11 @@ class _PanduanPageState extends State<PanduanPage>
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                           const Color.fromARGB(255, 8, 143, 78).withOpacity(0.08),
+                            const Color.fromARGB(255, 8, 143, 78)
+                                .withOpacity(0.08),
                             Colors.transparent,
-                           const Color.fromARGB(255, 8, 143, 78).withOpacity(0.12),
+                            const Color.fromARGB(255, 8, 143, 78)
+                                .withOpacity(0.12),
                           ],
                         ),
                       ),
@@ -272,7 +274,8 @@ class _PanduanPageState extends State<PanduanPage>
                           color: Colors.white.withOpacity(0.95),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color:const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+                            color: const Color.fromARGB(255, 8, 143, 78)
+                                .withOpacity(0.3),
                             width: 1,
                           ),
                           boxShadow: [
@@ -290,7 +293,7 @@ class _PanduanPageState extends State<PanduanPage>
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                color:const Color.fromARGB(255, 8, 143, 78),
+                                color: const Color.fromARGB(255, 8, 143, 78),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
@@ -375,8 +378,8 @@ class _PanduanPageState extends State<PanduanPage>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color:
-                const Color.fromARGB(255, 8, 143, 78).withOpacity(isCardPressed ? 0.2 : 0.3),
+            color: const Color.fromARGB(255, 8, 143, 78)
+                .withOpacity(isCardPressed ? 0.2 : 0.3),
             spreadRadius: 0,
             blurRadius: isCardPressed ? 4 : 8,
             offset: Offset(0, isCardPressed ? 1 : 3),
@@ -489,7 +492,7 @@ class _PanduanPageState extends State<PanduanPage>
                 label: 'Akun',
               ),
             ],
-            selectedItemColor:const Color.fromARGB(255, 8, 143, 78),
+            selectedItemColor: const Color.fromARGB(255, 8, 143, 78),
             unselectedItemColor: Colors.grey[400],
             selectedLabelStyle: GoogleFonts.poppins(
               fontSize: 12,

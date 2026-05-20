@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:application_hydrogami/models/panduan_model.dart';
+import 'package:application_hydrogami/services/globals.dart'; // Tambahkan import globals
 
 class DetailPanduanService {
   static Future<Panduan?> fetchPanduanDetail(int idPanduan) async {
     try {
-      final response = await http
-          .get(Uri.parse('http://192.168.56.100:8000/api/user/panduan/$idPanduan'));
+      // Gunakan baseURL agar dinamis dan mengikuti emulator/HP
+      final response =
+          await http.get(Uri.parse('${baseURL}user/panduan/$idPanduan'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body)['data'];
