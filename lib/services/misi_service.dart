@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/misi_model.dart';
 
 class MisiService {
-  static const String baseUrl = 'http://192.168.56.100/api/user';
+  static const String baseUrl = 'http://192.168.56.100:8000/api/user';
 
   // Method untuk mendapatkan headers
   Future<Map<String, String>> _getHeaders() async {

@@ -3,7 +3,7 @@ import 'dart:convert';
 import '../models/gamifikasi_model.dart';
 
 class GamificationService {
-  final String baseUrl = 'http:/192.168.56.100/api'; 
+  final String baseUrl = 'http:/192.168.56.100:8000/api'; 
   final String token;
 
   GamificationService(this.token);

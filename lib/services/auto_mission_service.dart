@@ -6,7 +6,7 @@ class AutoMissionService {
   // ✅ Untuk Android Emulator gunakan 10.0.2.2
   // ✅ Untuk iOS Simulator gunakan localhost atau 127.0.0.1
   // ✅ Untuk Real Device gunakan IP komputer Anda (misal: 192.168.1.100)
-  static const String baseUrl = 'http://192.168.56.100/api/user';
+  static const String baseUrl = 'http://192.168.56.100:8000/api/user';
   
   // Jika menggunakan real device, ganti dengan:
   // static const String baseUrl = 'http://192.168.1.100:8000/api/user';

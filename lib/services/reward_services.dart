@@ -5,7 +5,7 @@ import '../models/reward_model.dart';
 
 class RewardService {
   final String token;
-  static const String baseUrl = 'http://192.168.56.100/api'; // Ganti dengan URL API Anda
+  static const String baseUrl = 'http://192.168.56.100:8000/api'; // Ganti dengan URL API Anda
 
   RewardService(this.token);
 
