@@ -29,11 +29,11 @@ class RegistrasiPageState extends State<RegistrasiPage> {
   // Fungsi untuk menyimpan data user termasuk tanggal bergabung
   Future<void> _saveUserData(String username, String email) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     // Simpan data user
     await prefs.setString('username', username);
     await prefs.setString('email', email);
-    
+
     // Simpan tanggal bergabung saat registrasi
     final now = DateTime.now();
     final formattedDate = "${now.day} ${_getMonthName(now.month)} ${now.year}";
@@ -42,19 +42,32 @@ class RegistrasiPageState extends State<RegistrasiPage> {
 
   String _getMonthName(int month) {
     switch (month) {
-      case 1: return 'Januari';
-      case 2: return 'Februari';
-      case 3: return 'Maret';
-      case 4: return 'April';
-      case 5: return 'Mei';
-      case 6: return 'Juni';
-      case 7: return 'Juli';
-      case 8: return 'Agustus';
-      case 9: return 'September';
-      case 10: return 'Oktober';
-      case 11: return 'November';
-      case 12: return 'Desember';
-      default: return '';
+      case 1:
+        return 'Januari';
+      case 2:
+        return 'Februari';
+      case 3:
+        return 'Maret';
+      case 4:
+        return 'April';
+      case 5:
+        return 'Mei';
+      case 6:
+        return 'Juni';
+      case 7:
+        return 'Juli';
+      case 8:
+        return 'Agustus';
+      case 9:
+        return 'September';
+      case 10:
+        return 'Oktober';
+      case 11:
+        return 'November';
+      case 12:
+        return 'Desember';
+      default:
+        return '';
     }
   }
 
@@ -104,7 +117,7 @@ class RegistrasiPageState extends State<RegistrasiPage> {
       if (response.statusCode == 200) {
         // Simpan data user ke SharedPreferences
         await _saveUserData(username, email);
-        
+
         _showCustomSnackBar(context, 'Pendaftaran berhasil', Colors.green);
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.push(
@@ -152,7 +165,7 @@ class RegistrasiPageState extends State<RegistrasiPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor:  const Color.fromARGB(255, 8, 143, 78),
+          backgroundColor: const Color.fromARGB(255, 8, 143, 78),
           elevation: 0,
           toolbarHeight: 0,
         ),
@@ -170,7 +183,8 @@ class RegistrasiPageState extends State<RegistrasiPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 8, 143, 78),
+                            backgroundColor:
+                                const Color.fromARGB(255, 8, 143, 78),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             shape: RoundedRectangleBorder(
@@ -232,7 +246,7 @@ class RegistrasiPageState extends State<RegistrasiPage> {
                 child: Container(
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
-                    color:  const Color.fromARGB(255, 8, 143, 78),
+                    color: const Color.fromARGB(255, 8, 143, 78),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(60),
                     ),

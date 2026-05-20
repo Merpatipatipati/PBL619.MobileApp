@@ -77,8 +77,9 @@ class _BerandaPageState extends State<BerandaPage> {
   final String broker = '10.0.2.2';
   final int port = 1883;
   final String clientIdentifier =
-      'hydrogami_beranda_${DateTime.now().millisecondsSinceEpoch}';
+      'hg_app_${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
   final String topic = 'hydrogami/sensor/data';
+  bool _isMqttConnecting = false;
 
   // Location and weather
   String _currentLocation = "...";
@@ -124,51 +125,52 @@ class _BerandaPageState extends State<BerandaPage> {
   }
 
   // Data panduan
-  final List<Map<String, dynamic>> _panduanData = [
-    {
-      'image': 'assets/panduan_hidroponik.png',
-      'title': 'Panduan Merakit Sistem Hidroponik',
-      'subtitle': 'Pelajari cara merakit sistem hidroponik',
-      'page': const DetailPanduanHidroponikPage(idPanduan: 1),
-    },
-    {
-      'image': 'assets/panduan_sensor.png',
-      'title': 'Panduan Pemasangan Sensor IoT',
-      'subtitle': 'Cara memasang dan konfigurasi sensor',
-      'page': const DetailPanduanSensorPage(idPanduan: 2),
-    },
-    {
-      'image': 'assets/tanaman_panduan.png',
-      'title': 'Panduan Pengelolaan Tanaman',
-      'subtitle': 'Tips mengelola tanaman hidroponik',
-      'page': const DetailPanduanTanamanPage(idPanduan: 3),
-    },
-    {
-      'image': 'assets/panduanNutrisi.jpg',
-      'title': 'Panduan Pemberian Nutrisi',
-      'subtitle': 'Cara memberikan nutrisi yang tepat',
-      'page': const DetailPanduanNutrisiPage(idPanduan: 4),
-    },
-    {
-      'image': 'assets/phupdown.png',
-      'title': 'Panduan pH Up dan pH Down',
-      'subtitle': 'Mengatur pH tanaman hidroponik',
-      'page': const DetailPanduanPhUpDownPage(idPanduan: 5),
-    },
-    {
-      'image': 'assets/panenPakcoy.jpg',
-      'title': 'Panduan Memanen Pakcoy',
-      'subtitle': 'Tips memanen pakcoy dengan benar',
-      'page': const DetailPanduanPanenPage(idPanduan: 6),
-    },
-  ];
+  List<Map<String, dynamic>> get _panduanData => [
+        {
+          'image': 'assets/panduan_hidroponik.png',
+          'title': 'Panduan Merakit Sistem Hidroponik',
+          'subtitle': 'Pelajari cara merakit sistem hidroponik',
+          'page': DetailPanduanHidroponikPage(idPanduan: 1),
+        },
+        {
+          'image': 'assets/panduan_sensor.png',
+          'title': 'Panduan Pemasangan Sensor IoT',
+          'subtitle': 'Cara memasang dan konfigurasi sensor',
+          'page': DetailPanduanSensorPage(idPanduan: 2),
+        },
+        {
+          'image': 'assets/tanaman_panduan.png',
+          'title': 'Panduan Pengelolaan Tanaman',
+          'subtitle': 'Tips mengelola tanaman hidroponik',
+          'page': DetailPanduanTanamanPage(idPanduan: 3),
+        },
+        {
+          'image': 'assets/panduanNutrisi.jpg',
+          'title': 'Panduan Pemberian Nutrisi',
+          'subtitle': 'Cara memberikan nutrisi yang tepat',
+          'page': DetailPanduanNutrisiPage(idPanduan: 4),
+        },
+        {
+          'image': 'assets/phupdown.png',
+          'title': 'Panduan pH Up dan pH Down',
+          'subtitle': 'Mengatur pH tanaman hidroponik',
+          'page': DetailPanduanPhUpDownPage(idPanduan: 5),
+        },
+        {
+          'image': 'assets/panenPakcoy.jpg',
+          'title': 'Panduan Memanen $_selectedPlant',
+          'subtitle':
+              'Tips memanen ${_selectedPlant.toLowerCase()} dengan benar',
+          'page': DetailPanduanPanenPage(idPanduan: 6),
+        },
+      ];
 
   @override
   void initState() {
     super.initState();
     _loadUsername();
     _loadNotificationCount();
-    _loadTransactions();
+    //_loadTransactions();
     _getCurrentLocation();
     _initializePlant();
     _checkSetupStatus();
@@ -176,9 +178,9 @@ class _BerandaPageState extends State<BerandaPage> {
     _initializeMQTT();
     _loadRelayStates();
     _loadSensorData(); // Tambahkan ini
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _subscribeToSensorTopics();
-    });
+    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    //  _subscribeToSensorTopics();
+    //});
 
     _dataUpdateTimer = Timer.periodic(const Duration(minutes: 5), (timer) {
       _updateNutrientAndWaterData();
@@ -212,37 +214,54 @@ class _BerandaPageState extends State<BerandaPage> {
   }
 
   // Initialize MQTT
+  // Initialize MQTT
   Future<void> _initializeMQTT() async {
+    if (_isMqttConnecting) return;
+    _isMqttConnecting = true;
+
     client = MqttServerClient(broker, clientIdentifier);
     client.port = port;
     client.keepAlivePeriod = 60;
+
+    client.setProtocolV311();
+
     client.onDisconnected = _onDisconnected;
     client.onConnected = _onConnected;
     client.onSubscribed = _onSubscribed;
-    client.pongCallback = _pong;
 
     try {
-      await client.connect();
-      _subscribeToTopics();
+      print('Mencoba terhubung ke MQTT Broker...');
+      final status = await client.connect();
+
+      if (status?.state == MqttConnectionState.connected) {
+        print('Koneksi MQTT Sukses!');
+      } else {
+        print('Koneksi MQTT Gagal, status: ${status?.state}');
+        client.disconnect();
+      }
     } catch (e) {
       print('MQTT Connection Exception: $e');
       client.disconnect();
-      Future.delayed(const Duration(seconds: 5), () {
-        _initializeMQTT();
-      });
+    } finally {
+      _isMqttConnecting = false;
     }
   }
 
   void _onConnected() {
     print('Connected to MQTT broker');
     _subscribeToTopics();
+    _subscribeToSensorTopics();
   }
 
   void _onDisconnected() {
     print('Disconnected from MQTT broker');
-    Future.delayed(const Duration(seconds: 3), () {
-      _initializeMQTT();
-    });
+    _isMqttConnecting = false;
+
+    if (mounted) {
+      Future.delayed(const Duration(seconds: 5), () {
+        if (mounted) _initializeMQTT();
+      });
+    }
   }
 
   void _onSubscribed(String topic) {
@@ -499,6 +518,7 @@ class _BerandaPageState extends State<BerandaPage> {
             _plantStartDate = DateTime.parse(startDateString);
           }
         });
+        _loadTransactions();
       }
 
       if (_hasStartedPlanting && _plantStartDate != null) {
@@ -903,7 +923,7 @@ class _BerandaPageState extends State<BerandaPage> {
     setState(() {
       _plantActivities = [
         {
-          'title': 'Panen Pakcoy',
+          'title': 'Panen $_selectedPlant',
           'date': '18:27 - April 30',
           'category': 'Panen',
           'amount': 4.0,
