@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/sensor_data_model.dart';
+import 'package:application_hydrogami/services/globals.dart';
 
 class SensorDataService {
-  static const String _baseUrl =
-      'http://192.168.56.100:8000/api'; // Ganti dengan URL Laravel Anda
 
   Future<bool> sendSensorData(SensorData data) async {
     try {
@@ -12,7 +11,7 @@ class SensorDataService {
       print('Sending data: $jsonData'); // Debug 1
 
       final response = await http.post(
-        Uri.parse('$_baseUrl/sensor-data'),
+        Uri.parse('${baseURL}sensor-data'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(jsonData),
       );
@@ -34,7 +33,7 @@ class SensorDataService {
 
   Future<List<SensorData>> getSensorData() async {
     try {
-      final response = await http.get(Uri.parse('$_baseUrl/sensor-data'));
+      final response = await http.get(Uri.parse('${baseURL}sensor-data'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body)['data'];

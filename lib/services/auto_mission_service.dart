@@ -1,17 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:application_hydrogami/services/globals.dart';
 
 class AutoMissionService {
-  // ✅ Untuk Android Emulator gunakan 10.0.2.2
-  // ✅ Untuk iOS Simulator gunakan localhost atau 127.0.0.1
-  // ✅ Untuk Real Device gunakan IP komputer Anda (misal: 192.168.1.100)
-  static const String baseUrl = 'http://192.168.56.100:8000/api/user';
-  
-  // Jika menggunakan real device, ganti dengan:
-  // static const String baseUrl = 'http://192.168.1.100:8000/api/user';
-  // (Ganti 192.168.1.100 dengan IP komputer Anda)
-  
+  // ✅ Menggunakan baseURL dari globals.dart
+  static const String userBaseUrl = '${baseURL}user';
+
   /// Create Auto-Generated Mission
   static Future<bool> createAutoMission(Map<String, dynamic> missionData) async {
     try {
@@ -27,7 +22,7 @@ class AutoMissionService {
       print('📤 [AUTO MISSION] Data: $missionData');
       
       final response = await http.post(
-        Uri.parse('$baseUrl/misi/auto'),
+        Uri.parse('$userBaseUrl/misi/auto'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -77,7 +72,7 @@ class AutoMissionService {
       print('📤 [GET ACTIVE] Fetching active mission for: $parameter');
       
       final response = await http.get(
-        Uri.parse('$baseUrl/misi/active?parameter=$parameter'),
+        Uri.parse('$userBaseUrl/misi/active?parameter=$parameter'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -125,7 +120,7 @@ class AutoMissionService {
       print('📤 [COMPLETE] Completing mission ID: $missionId');
       
       final response = await http.patch(
-        Uri.parse('$baseUrl/misi/$missionId/complete'),
+        Uri.parse('$userBaseUrl/misi/$missionId/complete'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -192,7 +187,7 @@ class AutoMissionService {
       print('📤 [CLEANUP] Cleaning up old missions...');
       
       final response = await http.delete(
-        Uri.parse('$baseUrl/misi/auto/cleanup'),
+        Uri.parse('$userBaseUrl/misi/auto/cleanup'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -224,7 +219,7 @@ class AutoMissionService {
   static Future<bool> testConnection() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:8000/api/test'),
+        Uri.parse('${baseURL}test'),
         headers: {'Accept': 'application/json'},
       ).timeout(
         const Duration(seconds: 5),

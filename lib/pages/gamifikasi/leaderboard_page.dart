@@ -8,8 +8,9 @@ import 'package:application_hydrogami/pages/profil_page.dart';
 import 'package:application_hydrogami/pages/monitoring/notifikasi_page.dart';
 import 'package:application_hydrogami/pages/panduan/panduan_page.dart';
 import 'package:application_hydrogami/pages/gamifikasi/gamifikasi_page.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:application_hydrogami/services/globals.dart';
+import 'dart:convert';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -66,7 +67,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       if (mounted) {
         setState(() {
           _leaderboardService = LeaderboardService(
-            baseUrl: 'http://10.0.2.2:8000/api',
+            baseUrl: baseURL.replaceAll('/api/', '/api'), // hapus trailing slash kalau ada biar kompatibel
             token: token,
           );
         });
@@ -91,7 +92,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       if (_currentUserId.isEmpty && token != null) {
         try {
           final response = await http.get(
-            Uri.parse('http://10.0.2.2:8000/api/user'),
+            Uri.parse('${baseURL}user'),
             headers: {'Authorization': 'Bearer $token'},
           );
 
