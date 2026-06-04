@@ -6,7 +6,7 @@ const Map<String, String> headers = {
   "Accept": "application/json", // Tambahkan ini
 };
 
-errorSnackBar(BuildContext context, String text) {
+void errorSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     backgroundColor: Colors.red,
     content: Text(text),
@@ -14,7 +14,7 @@ errorSnackBar(BuildContext context, String text) {
   ));
 }
 
-successSnackBar(BuildContext context, String text) {
+void successSnackBar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     backgroundColor: Colors.green,
     content: Text(

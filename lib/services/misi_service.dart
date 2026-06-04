@@ -2,14 +2,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/misi_model.dart';
 import 'package:application_hydrogami/services/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MisiService {
   static const String userBaseUrl = '${baseURL}user';
   // Method untuk mendapatkan headers
   Future<Map<String, String>> _getHeaders() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
     return {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      if (token.isNotEmpty) 'Authorization': 'Bearer $token',
     };
   }
 

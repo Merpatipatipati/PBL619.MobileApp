@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:application_hydrogami/services/globals.dart';
+import '../../services/gamifikasi_services.dart';
 import 'package:confetti/confetti.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'rain_effect.dart';
@@ -295,7 +297,7 @@ class _GamifikasiProgresPageState extends State<GamifikasiProgresPage>
 
     try {
       final userResponse = await http.get(
-        Uri.parse('https://admin-hydrogami.up.railway.app/api/user'),
+        Uri.parse('${baseURL}user'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',

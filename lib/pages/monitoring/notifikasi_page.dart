@@ -434,10 +434,10 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            }),
                           ],
                         );
-                      }).toList(),
+                      }),
                     ],
                   ),
                 ),

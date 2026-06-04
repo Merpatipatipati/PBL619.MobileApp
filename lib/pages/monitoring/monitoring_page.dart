@@ -51,7 +51,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
   final String clientIdentifier =
       'hydrogami_flutter_client_${DateTime.now().millisecondsSinceEpoch}';
   final String topic = 'hydrogami/sensor/data';
-  
+
   // Penambahan untuk Indeks Pertumbuhan
   double growthIndex = 0.0;
   String growthStatus = 'Memuat Data...';
@@ -307,8 +307,8 @@ class _MonitoringPageState extends State<MonitoringPage> {
       _lastMissionCheck = now;
     }
 
-    // Cek penyelesaian misi setiap 1 menit
-    if (now.difference(_lastCompletionCheck) >= Duration(minutes: 1)) {
+    // Cek penyelesaian misi setiap 5 detik (dipercepat untuk keperluan testing/demo)
+    if (now.difference(_lastCompletionCheck) >= Duration(seconds: 5)) {
       _checkAutoMissionCompletion();
       _lastCompletionCheck = now;
     }
@@ -355,7 +355,8 @@ class _MonitoringPageState extends State<MonitoringPage> {
 
     return {
       'nama_misi': 'Koreksi pH Air', // ✅ DIPERBAIKI: nama -> nama_misi
-      'deskripsi_misi': 'Level pH ${currentPH.toStringAsFixed(1)} $status. Sesuaikan menggunakan $action.', // ✅ DIPERBAIKI: deskripsi -> deskripsi_misi
+      'deskripsi_misi':
+          'Level pH ${currentPH.toStringAsFixed(1)} $status. Sesuaikan menggunakan $action.', // ✅ DIPERBAIKI: deskripsi -> deskripsi_misi
       'poin': 50,
       'parameter_type': 'pH',
       'target_value': 6.0,
@@ -372,7 +373,8 @@ class _MonitoringPageState extends State<MonitoringPage> {
 
     return {
       'nama_misi': 'Atur Nutrisi TDS', // ✅ DIPERBAIKI: nama -> nama_misi
-      'deskripsi_misi': 'Level TDS ${currentTDS.toStringAsFixed(0)} ppm $status. $action nutrisi A/B Mix.', // ✅ DIPERBAIKI: deskripsi -> deskripsi_misi
+      'deskripsi_misi':
+          'Level TDS ${currentTDS.toStringAsFixed(0)} ppm $status. $action nutrisi A/B Mix.', // ✅ DIPERBAIKI: deskripsi -> deskripsi_misi
       'poin': 50,
       'parameter_type': 'TDS',
       'target_value': 1000.0,
@@ -386,10 +388,13 @@ class _MonitoringPageState extends State<MonitoringPage> {
   Future<void> _createAutoMission(Map<String, dynamic> missionData,
       _MissionState missionState, DateTime now) async {
     try {
-      print('📤 [MISSION] Attempting to create mission with data: $missionData');
-      print('📤 [MISSION] Field Check - nama_misi: ${missionData['nama_misi']}');
-      print('📤 [MISSION] Field Check - deskripsi_misi: ${missionData['deskripsi_misi']}');
-      
+      print(
+          '📤 [MISSION] Attempting to create mission with data: $missionData');
+      print(
+          '📤 [MISSION] Field Check - nama_misi: ${missionData['nama_misi']}');
+      print(
+          '📤 [MISSION] Field Check - deskripsi_misi: ${missionData['deskripsi_misi']}');
+
       bool success = await AutoMissionService.createAutoMission(missionData);
 
       if (success) {
@@ -406,8 +411,8 @@ class _MonitoringPageState extends State<MonitoringPage> {
         print('✅ Auto mission created: ${missionData['nama_misi']}');
       } else {
         print('❌ [MISSION] Failed to create mission. Check field mapping.');
-        _showMissionSnackBar(
-            context, 'Gagal membuat misi. Periksa data yang dikirim.', Colors.orange);
+        _showMissionSnackBar(context,
+            'Gagal membuat misi. Periksa data yang dikirim.', Colors.orange);
       }
     } catch (e) {
       print('❌ [MISSION] Error creating auto mission: $e');
@@ -985,7 +990,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                             index < maxDataPoints &&
                             index % 2 == 0) {
                           return SideTitleWidget(
-			    meta: meta,
+                            meta: meta,
                             child: Text(
                               index.toString(),
                               style: GoogleFonts.poppins(
@@ -1006,8 +1011,8 @@ class _MonitoringPageState extends State<MonitoringPage> {
                       interval: 20,
                       getTitlesWidget: (value, meta) {
                         return SideTitleWidget(
-			  meta: meta,
-			  child: Padding(
+                          meta: meta,
+                          child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Text(
                               value.toInt().toString(),
@@ -1168,7 +1173,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                             index < maxDataPoints &&
                             index % 2 == 0) {
                           return SideTitleWidget(
-			    meta: meta,
+                            meta: meta,
                             child: Text(
                               index.toString(),
                               style: GoogleFonts.poppins(
@@ -1189,7 +1194,7 @@ class _MonitoringPageState extends State<MonitoringPage> {
                       interval: interval,
                       getTitlesWidget: (value, meta) {
                         return SideTitleWidget(
-			  meta: meta,
+                          meta: meta,
                           child: Text(
                             value.toInt().toString(),
                             style: GoogleFonts.poppins(
@@ -1516,43 +1521,50 @@ class _MonitoringPageState extends State<MonitoringPage> {
     switch (sensorType) {
       case 'Suhu':
         if (value < 10 || value > 40) return Colors.red;
-        if ((value >= 15 && value < 19) || (value > 30 && value <= 35))
+        if ((value >= 15 && value < 19) || (value > 30 && value <= 35)) {
           return Colors.yellow;
+        }
         if (value >= 19 && value <= 30) return Colors.green;
         return Colors.black;
 
       case 'TDS':
         if (value < 300 || value > 2000) return Colors.red;
-        if ((value >= 500 && value < 800) || (value > 1500 && value <= 2000))
+        if ((value >= 500 && value < 800) || (value > 1500 && value <= 2000)) {
           return Colors.yellow;
+        }
         if (value >= 800 && value <= 1500) return Colors.green;
         return Colors.black;
 
       case 'pH':
         if (value < 4.0 || value > 7.5) return Colors.red;
-        if ((value >= 5.0 && value < 5.5) || (value > 6.5 && value <= 7.0))
+        if ((value >= 5.0 && value < 5.5) || (value > 6.5 && value <= 7.0)) {
           return Colors.yellow;
+        }
         if (value >= 5.5 && value <= 6.5) return Colors.green;
         return Colors.black;
 
       case 'Kelembaban Tanah':
         if (value <= 30 || value > 90) return Colors.red;
-        if ((value >= 40 && value < 50) || (value > 80 && value <= 90))
+        if ((value >= 40 && value < 50) || (value > 80 && value <= 90)) {
           return Colors.yellow;
+        }
         if (value >= 50 && value <= 80) return Colors.green;
         return Colors.black;
 
       case 'Kelembaban Udara':
         if (value < 30 || value > 90) return Colors.red;
-        if ((value >= 40 && value < 60) || (value > 80 && value <= 90))
+        if ((value >= 40 && value < 60) || (value > 80 && value <= 90)) {
           return Colors.yellow;
+        }
         if (value >= 60 && value <= 80) return Colors.green;
         return Colors.black;
 
       case 'Intensitas Cahaya':
         if (value < 1000 || value > 50000) return Colors.red;
         if ((value >= 2000 && value < 10000) ||
-            (value > 25000 && value <= 40000)) return Colors.yellow;
+            (value > 25000 && value <= 40000)) {
+          return Colors.yellow;
+        }
         if (value >= 10000 && value <= 25000) return Colors.green;
         return Colors.black;
 

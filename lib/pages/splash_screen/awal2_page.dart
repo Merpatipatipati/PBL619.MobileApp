@@ -43,7 +43,7 @@ class Awal2Page extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: const BoxDecoration(
-              color:  const Color.fromARGB(255, 8, 143, 78),
+              color:  Color.fromARGB(255, 8, 143, 78),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(60),
                 topRight: Radius.circular(0),

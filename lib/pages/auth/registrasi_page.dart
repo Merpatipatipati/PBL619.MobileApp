@@ -246,7 +246,7 @@ class RegistrasiPageState extends State<RegistrasiPage> {
                 child: Container(
                   padding: const EdgeInsets.all(30),
                   decoration: const BoxDecoration(
-                    color: const Color.fromARGB(255, 8, 143, 78),
+                    color: Color.fromARGB(255, 8, 143, 78),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(60),
                     ),

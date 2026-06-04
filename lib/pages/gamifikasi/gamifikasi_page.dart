@@ -357,8 +357,8 @@ class _GamifikasiPageState extends State<GamifikasiPage>
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(255, 8, 143, 78),
-                const Color.fromARGB(255, 8, 143, 78)
+                Color.fromARGB(255, 8, 143, 78),
+                Color.fromARGB(255, 8, 143, 78)
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -437,7 +437,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                           ),
                           child: const Icon(
                             Icons.tune_rounded,
-                            color: const Color.fromARGB(255, 8, 143, 78),
+                            color: Color.fromARGB(255, 8, 143, 78),
                             size: 24,
                           ),
                         ),
@@ -593,7 +593,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
               ),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: const Color.fromARGB(255, 8, 143, 78),
+                color: Color.fromARGB(255, 8, 143, 78),
                 size: 18, // Smaller icon
               ),
             ),
@@ -612,7 +612,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
             padding: const EdgeInsets.only(bottom: 12), // Reduced spacing
             child: _buildPumpControlCard(controlName),
           );
-        }).toList(),
+        }),
       ],
     );
   }

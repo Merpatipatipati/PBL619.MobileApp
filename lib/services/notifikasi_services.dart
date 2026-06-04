@@ -16,7 +16,7 @@ class LayananNotifikasi {
 
       if (debugMode) {
         print(
-            '[NotifikasiService] Token: ${token.isNotEmpty ? '*****' + token.substring(token.length - 5) : 'KOSONG'}');
+            '[NotifikasiService] Token: ${token.isNotEmpty ? '*****${token.substring(token.length - 5)}' : 'KOSONG'}');
       }
 
       return {
