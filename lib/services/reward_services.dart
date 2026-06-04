@@ -2,17 +2,17 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/reward_model.dart';
+import 'package:application_hydrogami/services/globals.dart';
 
 class RewardService {
   final String token;
-  static const String baseUrl = 'http://192.168.56.100:8000/api'; // Ganti dengan URL API Anda
 
   RewardService(this.token);
 
   Future<List<Reward>> getGachaRewards() async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/rewards/gacha'),
+        Uri.parse('${baseURL}rewards/gacha'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -33,7 +33,7 @@ class RewardService {
   Future<List<Reward>> getRedeemRewards() async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/rewards/redeem'),
+        Uri.parse('${baseURL}rewards/redeem'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',

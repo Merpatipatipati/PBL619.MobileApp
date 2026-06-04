@@ -13,7 +13,7 @@ import 'package:application_hydrogami/pages/gamifikasi/reward_page.dart';
 import 'package:application_hydrogami/pages/gamifikasi/gamifikasi_progres_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:application_hydrogami/pages/auth/login_page.dart';
+
 import 'package:application_hydrogami/pages/monitoring/notifikasi_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -1359,7 +1359,7 @@ class _BerandaPageState extends State<BerandaPage> {
                         child: IconButton(
                           icon: const Icon(
                             Icons.notifications_on_rounded,
-                            color: const Color.fromARGB(255, 8, 143, 78),
+                            color: Color.fromARGB(255, 8, 143, 78),
                             size: 20,
                           ),
                           onPressed: () {

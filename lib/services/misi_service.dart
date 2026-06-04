@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/misi_model.dart';
+import 'package:application_hydrogami/services/globals.dart';
 
 class MisiService {
-  static const String baseUrl = 'http://192.168.56.100:8000/api/user';
-
+  static const String userBaseUrl = '${baseURL}user';
   // Method untuk mendapatkan headers
   Future<Map<String, String>> _getHeaders() async {
     return {
@@ -15,10 +15,10 @@ class MisiService {
 
   Future<List<Misi>> getAllMisi() async {
     try {
-      print('Fetching missions from: $baseUrl/misi');
+      print('Fetching missions from: $userBaseUrl/misi');
       
       final response = await http.get(
-        Uri.parse('$baseUrl/misi'),
+        Uri.parse('$userBaseUrl/misi'),
         headers: await _getHeaders(),
       );
       
@@ -71,7 +71,7 @@ class MisiService {
       print('Fetching mission detail for ID: $idMisi');
       
       final response = await http.get(
-        Uri.parse('$baseUrl/misi/$idMisi'),
+        Uri.parse('$userBaseUrl/misi/$idMisi'),
         headers: await _getHeaders(),
       );
       
@@ -101,7 +101,7 @@ class MisiService {
       print('Completing mission ID: $missionId');
       
       final response = await http.post(
-        Uri.parse('$baseUrl/misi/$missionId/complete'),
+        Uri.parse('$userBaseUrl/misi/$missionId/complete'),
         headers: await _getHeaders(),
       );
 
@@ -130,7 +130,7 @@ class MisiService {
       print('Cleaning up expired missions...');
       
       final response = await http.delete(
-        Uri.parse('http://10.0.2.2:8000/api/admin/misi/auto/cleanup'),
+        Uri.parse('$userBaseUrl/misi/auto/cleanup'),
         headers: await _getHeaders(),
       );
 
@@ -156,7 +156,7 @@ class MisiService {
       print('Fetching active mission for parameter: $parameter');
       
       final response = await http.get(
-        Uri.parse('$baseUrl/misi/active?parameter=$parameter'),
+        Uri.parse('$userBaseUrl/misi/active?parameter=$parameter'),
         headers: await _getHeaders(),
       );
 
@@ -184,7 +184,7 @@ class MisiService {
       print('Creating auto mission: $missionData');
       
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/api/admin/misi/auto'),
+        Uri.parse('$userBaseUrl/misi/auto'),
         headers: await _getHeaders(),
         body: json.encode(missionData),
       );
@@ -209,7 +209,7 @@ class MisiService {
   Future<bool> testConnection() async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/misi'),
+        Uri.parse('$userBaseUrl/misi'),
         headers: await _getHeaders(),
       ).timeout(const Duration(seconds: 10));
       

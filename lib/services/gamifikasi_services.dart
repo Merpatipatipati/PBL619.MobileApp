@@ -1,16 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/gamifikasi_model.dart';
+import 'package:application_hydrogami/services/globals.dart';
 
 class GamificationService {
-  final String baseUrl = 'http:/192.168.56.100:8000/api'; 
   final String token;
 
   GamificationService(this.token);
 
   Future<GamificationModel> getGamification() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/gamification'),
+      Uri.parse('${baseURL}gamification'),
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -27,7 +27,7 @@ class GamificationService {
 
   Future<bool> updateGamification(int poin, int coin, int level) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/gamification'),
+      Uri.parse('${baseURL}gamification'),
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
