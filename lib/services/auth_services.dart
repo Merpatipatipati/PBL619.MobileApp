@@ -14,7 +14,7 @@ class AuthServices {
       "poin": poin,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseURL + 'auth/register');
+    var url = Uri.parse('${baseURL}auth/register');
 
     http.Response response = await http.post(
       url,
@@ -48,7 +48,7 @@ class AuthServices {
       "password": password,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseURL + 'auth/login');
+    var url = Uri.parse('${baseURL}auth/login');
 
     http.Response response = await http.post(
       url,
@@ -89,7 +89,7 @@ class AuthServices {
     }
 
     var body = json.encode(data);
-    var url = Uri.parse(baseURL + 'update-profile');
+    var url = Uri.parse('${baseURL}update-profile');
 
     try {
       http.Response response = await http.put(
@@ -105,7 +105,7 @@ class AuthServices {
       return response;
     } catch (e) {
       print('Error in updateProfile: $e');
-      throw e;
+      rethrow;
     }
   }
 }

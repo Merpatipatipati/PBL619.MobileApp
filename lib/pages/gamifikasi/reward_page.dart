@@ -500,7 +500,7 @@ class _RewardPageState extends State<RewardPage>
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
-        color: const Color.fromARGB(255, 8, 143, 78),
+        color: Color.fromARGB(255, 8, 143, 78),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
@@ -662,7 +662,7 @@ class _RewardPageState extends State<RewardPage>
                 ),
                 child: const Icon(
                   Icons.casino,
-                  color: const Color.fromARGB(255, 8, 143, 78),
+                  color: Color.fromARGB(255, 8, 143, 78),
                   size: 24,
                 ),
               ),
@@ -700,10 +700,10 @@ class _RewardPageState extends State<RewardPage>
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color:  const Color.fromARGB(255, 8, 143, 78).withOpacity(0.05),
+              color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.05),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color:  const Color.fromARGB(255, 8, 143, 78).withOpacity(0.2),
+                color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.2),
                 width: 1,
               ),
             ),
@@ -771,11 +771,13 @@ class _RewardPageState extends State<RewardPage>
             child: ElevatedButton(
               onPressed: _isSpinning ? null : _spinWheel,
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    _isSpinning ? Colors.grey[400] :  const Color.fromARGB(255, 8, 143, 78),
+                backgroundColor: _isSpinning
+                    ? Colors.grey[400]
+                    : const Color.fromARGB(255, 8, 143, 78),
                 foregroundColor: Colors.white,
                 elevation: _isSpinning ? 0 : 2,
-                shadowColor:  const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+                shadowColor:
+                    const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -919,12 +921,13 @@ class _RewardPageState extends State<RewardPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                    color:
+                        const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
                     Icons.monetization_on,
-                    color:  const Color.fromARGB(255, 8, 143, 78),
+                    color: Color.fromARGB(255, 8, 143, 78),
                     size: 24,
                   ),
                 ),
@@ -994,12 +997,13 @@ class _RewardPageState extends State<RewardPage>
                         margin: const EdgeInsets.only(bottom: 12),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ?  const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1)
+                              ? const Color.fromARGB(255, 8, 143, 78)
+                                  .withOpacity(0.1)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isSelected
-                                ?  const Color.fromARGB(255, 8, 143, 78)
+                                ? const Color.fromARGB(255, 8, 143, 78)
                                 : Colors.grey[300]!,
                             width: isSelected ? 2 : 1,
                           ),
@@ -1018,8 +1022,8 @@ class _RewardPageState extends State<RewardPage>
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color:
-                                       const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                                  color: const Color.fromARGB(255, 8, 143, 78)
+                                      .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
@@ -1027,7 +1031,8 @@ class _RewardPageState extends State<RewardPage>
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: const Color.fromARGB(255, 8, 143, 78),
+                                    color:
+                                        const Color.fromARGB(255, 8, 143, 78),
                                   ),
                                 ),
                               ),
@@ -1084,10 +1089,11 @@ class _RewardPageState extends State<RewardPage>
                     ? _performRedeem
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:  const Color.fromARGB(255, 8, 143, 78),
+                  backgroundColor: const Color.fromARGB(255, 8, 143, 78),
                   foregroundColor: Colors.white,
                   elevation: 2,
-                  shadowColor: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+                  shadowColor:
+                      const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -1302,7 +1308,7 @@ class _RewardPageState extends State<RewardPage>
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: const Color.fromARGB(255, 8, 143, 78),
+                color: Color.fromARGB(255, 8, 143, 78),
               ),
             )
           : _errorMessage != null
@@ -1328,7 +1334,8 @@ class _RewardPageState extends State<RewardPage>
                       ElevatedButton(
                         onPressed: _loadRewards,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:  const Color.fromARGB(255, 8, 143, 78),
+                          backgroundColor:
+                              const Color.fromARGB(255, 8, 143, 78),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

@@ -31,39 +31,53 @@ class _LoginPageState extends State<LoginPage>
   // Fungsi untuk menyimpan data user termasuk tanggal bergabung
   Future<void> _saveUserData(Map<String, dynamic> userData) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     // Simpan data user
     await prefs.setString('username', userData['username'] ?? '');
     await prefs.setString('email', userData['email'] ?? '');
-    
+
     // Simpan tanggal bergabung (jika belum ada)
     final existingJoinDate = prefs.getString('join_date');
     if (existingJoinDate == null || existingJoinDate.isEmpty) {
       final now = DateTime.now();
-      final formattedDate = "${now.day} ${_getMonthName(now.month)} ${now.year}";
+      final formattedDate =
+          "${now.day} ${_getMonthName(now.month)} ${now.year}";
       await prefs.setString('join_date', formattedDate);
     }
   }
 
   String _getMonthName(int month) {
     switch (month) {
-      case 1: return 'Januari';
-      case 2: return 'Februari';
-      case 3: return 'Maret';
-      case 4: return 'April';
-      case 5: return 'Mei';
-      case 6: return 'Juni';
-      case 7: return 'Juli';
-      case 8: return 'Agustus';
-      case 9: return 'September';
-      case 10: return 'Oktober';
-      case 11: return 'November';
-      case 12: return 'Desember';
-      default: return '';
+      case 1:
+        return 'Januari';
+      case 2:
+        return 'Februari';
+      case 3:
+        return 'Maret';
+      case 4:
+        return 'April';
+      case 5:
+        return 'Mei';
+      case 6:
+        return 'Juni';
+      case 7:
+        return 'Juli';
+      case 8:
+        return 'Agustus';
+      case 9:
+        return 'September';
+      case 10:
+        return 'Oktober';
+      case 11:
+        return 'November';
+      case 12:
+        return 'Desember';
+      default:
+        return '';
     }
   }
 
-  loginPressed() async {
+  Future<void> loginPressed() async {
     // Mengambil nilai email dan password dari controller
     email = emailController.text;
     password = passwordController.text;
@@ -75,10 +89,10 @@ class _LoginPageState extends State<LoginPage>
 
         if (response.statusCode == 200) {
           final prefs = await SharedPreferences.getInstance();
-          
+
           // Simpan data user termasuk email dan tanggal bergabung
           await _saveUserData(responseMap['user']);
-          
+
           await prefs.setString('username', responseMap['user']['username']);
 
           // Cek tokennya ada atau ngga
@@ -173,7 +187,9 @@ class _LoginPageState extends State<LoginPage>
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
-                      Container(height: 55, color: const Color.fromARGB(255, 8, 143, 78)),
+                      Container(
+                          height: 55,
+                          color: const Color.fromARGB(255, 8, 143, 78)),
                       const SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -184,7 +200,8 @@ class _LoginPageState extends State<LoginPage>
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:const Color.fromARGB(255, 8, 143, 78),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 8, 143, 78),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8, vertical: 4),
                                     shape: RoundedRectangleBorder(
@@ -192,10 +209,11 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(context, 
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RegistrasiPage()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RegistrasiPage()));
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -243,7 +261,7 @@ class _LoginPageState extends State<LoginPage>
                         child: Container(
                           padding: const EdgeInsets.all(30),
                           decoration: const BoxDecoration(
-                            color:const Color.fromARGB(255, 8, 143, 78),
+                            color: Color.fromARGB(255, 8, 143, 78),
                             borderRadius:
                                 BorderRadius.only(topLeft: Radius.circular(60)),
                           ),
