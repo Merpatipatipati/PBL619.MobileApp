@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/misi_model.dart';
+import '../models/misi_progress_model.dart';
 import 'package:application_hydrogami/services/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -223,4 +224,69 @@ class MisiService {
       return false;
     }
   }
+  Future<List<MisiProgress>> getUserProgress() async {
+    try {
+      print('Fetching user mission progress...');
+      final response = await http.get(
+        Uri.parse('$userBaseUrl/misi/progress'),
+        headers: await _getHeaders(),
+      );
+      print('Progress response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (!data.containsKey('data')) {
+          throw Exception('Response tidak memiliki field data');
+        }
+        return (data['data'] as List)
+            .map((e) => MisiProgress.fromJson(e))
+            .toList();
+      } else {
+        throw Exception('Failed to load progress: HTTP ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception in getUserProgress: $e');
+      throw Exception('Failed to load progress: $e');
+    }
+  }
+
+  // Reset progress satu misi (untuk testing)
+  Future<bool> resetProgress(int idMisi) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$userBaseUrl/misi/$idMisi/reset'),
+        headers: await _getHeaders(),
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Error resetting progress: $e');
+      return false;
+    }
+  }
+  Future<Map<String, dynamic>> claimMisi(int idMisi) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$userBaseUrl/misi/$idMisi/claim'),
+      headers: await _getHeaders(),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return {
+        'success':      true,
+        'message':      data['message'],
+        'poin_didapat': data['data']['poin_didapat'],
+        'total_poin':   data['data']['total_poin'],
+      };
+    } else {
+      return {
+        'success': false,
+        'message': data['message'] ?? 'Gagal klaim misi',
+      };
+    }
+  } catch (e) {
+    return {'success': false, 'message': 'Error: $e'};
+  }
+}
 }
