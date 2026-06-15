@@ -289,4 +289,18 @@ class MisiService {
     return {'success': false, 'message': 'Error: $e'};
   }
 }
+
+  Future<void> evaluateSensorProgress(Map<String, dynamic> sensorData) async {
+    try {
+      print('Evaluating sensor progress: $sensorData');
+      final response = await http.post(
+        Uri.parse('$userBaseUrl/misi/evaluate'),
+        headers: await _getHeaders(),
+        body: json.encode(sensorData),
+      );
+      print('Evaluate response status: ${response.statusCode}');
+    } catch (e) {
+      print('Error evaluating sensor progress: $e');
+    }
+  }
 }

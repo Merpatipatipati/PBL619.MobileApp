@@ -8,6 +8,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:application_hydrogami/services/notifikasi_services.dart';
 import 'package:application_hydrogami/services/sensor_data_service.dart';
 import 'package:application_hydrogami/services/auto_mission_service.dart';
+import 'package:application_hydrogami/services/misi_service.dart';
 import 'package:application_hydrogami/models/sensor_data_model.dart';
 import 'dart:convert';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -279,6 +280,13 @@ class _MonitoringPageState extends State<MonitoringPage> {
           }
         } catch (apiError) {
           print('API Error: $apiError');
+        }
+
+        // ✅ Trigger Backend Gamification Evaluation
+        try {
+          await MisiService().evaluateSensorProgress(data);
+        } catch (evalError) {
+          print('Error evaluating gamification progress: $evalError');
         }
 
         // ✅ CEK ALERT REAL-TIME
