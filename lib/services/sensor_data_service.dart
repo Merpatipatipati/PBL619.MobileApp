@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import '../models/sensor_data_model.dart';
 import 'package:application_hydrogami/services/globals.dart';
 
@@ -8,7 +9,7 @@ class SensorDataService {
   Future<bool> sendSensorData(SensorData data) async {
     try {
       final jsonData = data.toJson();
-      print('Sending data: $jsonData'); // Debug 1
+      debugPrint('Sending data: $jsonData'); // Debug 1
 
       final response = await http.post(
         Uri.parse('${baseURL}sensor-data'),
@@ -16,17 +17,17 @@ class SensorDataService {
         body: json.encode(jsonData),
       );
 
-      print('Response status: ${response.statusCode}'); // Debug 2
-      print('Response body: ${response.body}'); // Debug 3
+      debugPrint('Response status: ${response.statusCode}'); // Debug 2
+      debugPrint('Response body: ${response.body}'); // Debug 3
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return true;
       } else {
-        print('Failed to send data: ${response.body}');
+        debugPrint('Failed to send data: ${response.body}');
         return false;
       }
     } catch (e) {
-      print('Error sending data: $e');
+      debugPrint('Error sending data: $e');
       return false;
     }
   }
@@ -42,8 +43,8 @@ class SensorDataService {
         throw Exception('Failed to load data');
       }
     } catch (e) {
-      print('Error getting data: $e');
-      throw e;
+      debugPrint('Error getting data: $e');
+      rethrow;
     }
   }
 }
