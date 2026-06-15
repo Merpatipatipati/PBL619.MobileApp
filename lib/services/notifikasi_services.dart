@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:application_hydrogami/models/notifikasi_model.dart'; // Import model
 import 'package:application_hydrogami/services/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,14 +55,14 @@ class LayananNotifikasi {
   // Ambil semua notifikasi
   static Future<List<NotifikasiModel>> ambilNotifikasi() async {
     try {
-      print('Mengambil notifikasi dari ${baseURL}notifikasi');
+      debugPrint('Mengambil notifikasi dari ${baseURL}notifikasi');
       final response = await http.get(
         Uri.parse('${baseURL}notifikasi'),
         headers: await _getHeaders(),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final data = json.decode(response.body);
 
