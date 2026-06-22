@@ -73,7 +73,7 @@ class _ProfilPageState extends State<ProfilPage> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -102,7 +102,8 @@ class _ProfilPageState extends State<ProfilPage> {
               case 1:
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const GamifikasiPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const GamifikasiPage()),
                 );
                 break;
               case 2:
@@ -305,7 +306,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF088F4E).withOpacity(0.3),
+                  color: const Color(0xFF088F4E).withValues(alpha: 0.3),
                   blurRadius: 15,
                   offset: const Offset(0, 8),
                 ),
@@ -320,7 +321,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withValues(alpha: 0.2),
                           blurRadius: 15,
                           offset: const Offset(0, 6),
                         ),
@@ -359,13 +360,14 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.email_outlined, color: Colors.white, size: 14),
+                      const Icon(Icons.email_outlined,
+                          color: Colors.white, size: 14),
                       const SizedBox(width: 6),
                       Text(
                         _email.isNotEmpty ? _email : 'email@example.com',
                         style: GoogleFonts.poppins(
                           fontSize: 12,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
                     ],
@@ -415,7 +417,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -487,7 +489,8 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   child: LinearProgressIndicator(
                     value: (_userExp % 200) / 200,
                     backgroundColor: Colors.grey[200],
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF088F4E)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF088F4E)),
                     minHeight: 8,
                   ),
                 ),
@@ -505,7 +508,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -569,7 +572,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -614,7 +617,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -912,7 +915,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -941,7 +944,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               case 1:
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const GamifikasiPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const GamifikasiPage()),
                 );
                 break;
               case 2:
@@ -1069,7 +1073,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 20,
                         offset: const Offset(0, 4),
                       ),
@@ -1108,7 +1112,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF088F4E).withOpacity(0.3),
+                                    color: const Color(0xFF088F4E)
+                                        .withValues(alpha: 0.3),
                                     blurRadius: 20,
                                     offset: const Offset(0, 8),
                                   ),
@@ -1151,11 +1156,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: const LinearGradient(
-                                  colors: [Color(0xFF088F4E), Color(0xFF06743E)],
+                                  colors: [
+                                    Color(0xFF088F4E),
+                                    Color(0xFF06743E)
+                                  ],
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF088F4E).withOpacity(0.4),
+                                    color: const Color(0xFF088F4E)
+                                        .withValues(alpha: 0.4),
                                     blurRadius: 12,
                                     offset: const Offset(0, 4),
                                   ),
@@ -1204,7 +1213,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 20,
                         offset: const Offset(0, 4),
                       ),
@@ -1269,7 +1278,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 20,
                         offset: const Offset(0, 4),
                       ),
@@ -1361,7 +1370,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF088F4E).withOpacity(0.4),
+                        color: const Color(0xFF088F4E).withValues(alpha: 0.4),
                         blurRadius: 16,
                         offset: const Offset(0, 8),
                       ),
@@ -1553,7 +1562,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 IconButton(
                   onPressed: onToggle,
                   icon: Icon(
-                    obscureText ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                    obscureText
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
                     color: Colors.grey[500],
                     size: 20,
                   ),

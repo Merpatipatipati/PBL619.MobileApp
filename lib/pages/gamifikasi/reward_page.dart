@@ -541,7 +541,7 @@ class _RewardPageState extends State<RewardPage>
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -626,7 +626,7 @@ class _RewardPageState extends State<RewardPage>
     return Container(
       height: 40,
       width: 1,
-      color: Colors.white.withOpacity(0.3),
+      color: Colors.white.withValues(alpha: 0.3),
     );
   }
 
@@ -641,7 +641,7 @@ class _RewardPageState extends State<RewardPage>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -657,7 +657,8 @@ class _RewardPageState extends State<RewardPage>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                  color: const Color.fromARGB(255, 8, 143, 78)
+                      .withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -700,10 +701,12 @@ class _RewardPageState extends State<RewardPage>
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.05),
+              color:
+                  const Color.fromARGB(255, 8, 143, 78).withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.2),
+                color: const Color.fromARGB(255, 8, 143, 78)
+                    .withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -765,7 +768,7 @@ class _RewardPageState extends State<RewardPage>
           const SizedBox(height: 24),
 
           // Spin Button (white background)
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
@@ -776,8 +779,8 @@ class _RewardPageState extends State<RewardPage>
                     : const Color.fromARGB(255, 8, 143, 78),
                 foregroundColor: Colors.white,
                 elevation: _isSpinning ? 0 : 2,
-                shadowColor:
-                    const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+                shadowColor: const Color.fromARGB(255, 8, 143, 78)
+                    .withValues(alpha: 0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -905,7 +908,7 @@ class _RewardPageState extends State<RewardPage>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               spreadRadius: 0,
               blurRadius: 10,
               offset: const Offset(0, 4),
@@ -921,8 +924,8 @@ class _RewardPageState extends State<RewardPage>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color:
-                        const Color.fromARGB(255, 8, 143, 78).withOpacity(0.1),
+                    color: const Color.fromARGB(255, 8, 143, 78)
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -998,7 +1001,7 @@ class _RewardPageState extends State<RewardPage>
                         decoration: BoxDecoration(
                           color: isSelected
                               ? const Color.fromARGB(255, 8, 143, 78)
-                                  .withOpacity(0.1)
+                                  .withValues(alpha: 0.1)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
@@ -1023,7 +1026,7 @@ class _RewardPageState extends State<RewardPage>
                                 ),
                                 decoration: BoxDecoration(
                                   color: const Color.fromARGB(255, 8, 143, 78)
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
@@ -1092,8 +1095,8 @@ class _RewardPageState extends State<RewardPage>
                   backgroundColor: const Color.fromARGB(255, 8, 143, 78),
                   foregroundColor: Colors.white,
                   elevation: 2,
-                  shadowColor:
-                      const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+                  shadowColor: const Color.fromARGB(255, 8, 143, 78)
+                      .withValues(alpha: 0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -1190,7 +1193,7 @@ class _RewardPageState extends State<RewardPage>
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

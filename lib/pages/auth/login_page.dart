@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:application_hydrogami/pages/widgets/rounded_button.dart';
 import 'package:application_hydrogami/services/auth_services.dart';
-import 'package:application_hydrogami/services/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:application_hydrogami/pages/skala%20and%20plant/pilih_page.dart';

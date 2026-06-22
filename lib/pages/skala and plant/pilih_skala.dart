@@ -147,7 +147,7 @@ class _PilihSkalaPageState extends State<PilihSkalaPage> {
                         border: Border.all(color: borderColor, width: 1),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 4,
                             offset: const Offset(0, 5),
                           ),

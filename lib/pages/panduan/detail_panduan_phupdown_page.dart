@@ -40,7 +40,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60,
                     height: 60,
                     child: CircularProgressIndicator(
@@ -149,8 +149,8 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              const Color(0xFF29CC74).withOpacity(0.8),
-                              const Color(0xFF20B863).withOpacity(0.9),
+                              const Color(0xFF29CC74).withValues(alpha: 0.8),
+                              const Color(0xFF20B863).withValues(alpha: 0.9),
                             ],
                           ),
                         ),
@@ -182,7 +182,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                   child: Icon(
                                     Icons.eco_rounded,
                                     size: 80,
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                   ),
                                 ),
                               ),
@@ -196,7 +196,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              Colors.black.withOpacity(0.3),
+                              Colors.black.withValues(alpha: 0.3),
                             ],
                           ),
                         ),
@@ -231,14 +231,16 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    const Color(0xFF29CC74).withOpacity(0.15),
-                                    const Color(0xFF20B863).withOpacity(0.15),
+                                    const Color(0xFF29CC74)
+                                        .withValues(alpha: 0.15),
+                                    const Color(0xFF20B863)
+                                        .withValues(alpha: 0.15),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(24),
                                 border: Border.all(
-                                  color:
-                                      const Color(0xFF29CC74).withOpacity(0.4),
+                                  color: const Color(0xFF29CC74)
+                                      .withValues(alpha: 0.4),
                                   width: 1.5,
                                 ),
                               ),
@@ -297,7 +299,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.06),
+                                    color: Colors.black.withValues(alpha: 0.06),
                                     blurRadius: 12,
                                     offset: const Offset(0, 4),
                                   ),
@@ -312,9 +314,9 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                       gradient: LinearGradient(
                                         colors: [
                                           const Color(0xFF29CC74)
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                           const Color(0xFF20B863)
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                         ],
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -350,13 +352,13 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.06),
+                              color: Colors.black.withValues(alpha: 0.06),
                               spreadRadius: 0,
                               blurRadius: 24,
                               offset: const Offset(0, 12),
                             ),
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               spreadRadius: 0,
                               blurRadius: 12,
                               offset: const Offset(0, 6),
@@ -374,7 +376,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 12,
                                     offset: const Offset(0, 4),
                                   ),
@@ -394,9 +396,9 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                           end: Alignment.bottomRight,
                                           colors: [
                                             const Color(0xFF29CC74)
-                                                .withOpacity(0.8),
+                                                .withValues(alpha: 0.8),
                                             const Color(0xFF20B863)
-                                                .withOpacity(0.9),
+                                                .withValues(alpha: 0.9),
                                           ],
                                         ),
                                       ),
@@ -420,7 +422,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                                     .play_circle_outline_rounded,
                                                 size: 64,
                                                 color: Colors.white
-                                                    .withOpacity(0.9),
+                                                    .withValues(alpha: 0.9),
                                               ),
                                             ),
                                           );
@@ -436,7 +438,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                           end: Alignment.bottomCenter,
                                           colors: [
                                             Colors.transparent,
-                                            Colors.black.withOpacity(0.3),
+                                            Colors.black.withValues(alpha: 0.3),
                                           ],
                                         ),
                                       ),
@@ -482,14 +484,14 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                                 : 1.0),
                                           padding: const EdgeInsets.all(16),
                                           decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.95),
+                                            color: Colors.white
+                                                .withValues(alpha: 0.95),
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(
-                                                    _isPlayButtonPressed
+                                                color: Colors.black.withValues(
+                                                    alpha: _isPlayButtonPressed
                                                         ? 0.3
                                                         : 0.2),
                                                 blurRadius: _isPlayButtonPressed
@@ -554,7 +556,8 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 4),
                                         decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.8),
+                                          color: Colors.black
+                                              .withValues(alpha: 0.8),
                                           borderRadius:
                                               BorderRadius.circular(4),
                                         ),
@@ -674,7 +677,7 @@ class _DetailPanduanPhUpDownPageState extends State<DetailPanduanPhUpDownPage> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

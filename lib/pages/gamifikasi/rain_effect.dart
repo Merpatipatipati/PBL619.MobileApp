@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class RainEffect extends StatefulWidget {
-  const RainEffect({Key? key}) : super(key: key);
+  const RainEffect({super.key});
 
   @override
   State<RainEffect> createState() => _RainEffectState();
 }
 
-class _RainEffectState extends State<RainEffect> with SingleTickerProviderStateMixin {
+class _RainEffectState extends State<RainEffect>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final List<RainDrop> _drops = [];
   final int _dropCount = 150;
@@ -110,9 +111,9 @@ class _RainPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Colors.lightBlue.withOpacity(drop.opacity * 0.3),
-          Colors.blue.withOpacity(drop.opacity),
-          Colors.lightBlue.withOpacity(drop.opacity * 0.8),
+          Colors.lightBlue.withValues(alpha: drop.opacity * 0.3),
+          Colors.blue.withValues(alpha: drop.opacity),
+          Colors.lightBlue.withValues(alpha: drop.opacity * 0.8),
         ],
       );
 
@@ -135,7 +136,7 @@ class _RainPainter extends CustomPainter {
 
       final fadedPaint = dropPaint
         ..colorFilter = ColorFilter.mode(
-          Colors.white.withOpacity(fadeFactor),
+          Colors.white.withValues(alpha: fadeFactor),
           BlendMode.modulate,
         );
 
@@ -146,7 +147,8 @@ class _RainPainter extends CustomPainter {
       );
 
       final circlePaint = Paint()
-        ..color = Colors.lightBlue.withOpacity(drop.opacity * 0.4 * fadeFactor)
+        ..color =
+            Colors.lightBlue.withValues(alpha: drop.opacity * 0.4 * fadeFactor)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(Offset(endX, endY), 1.0, circlePaint);
