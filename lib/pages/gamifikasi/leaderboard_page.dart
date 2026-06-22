@@ -67,7 +67,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       if (mounted) {
         setState(() {
           _leaderboardService = LeaderboardService(
-            baseUrl: baseURL.replaceAll('/api/', '/api'), // hapus trailing slash kalau ada biar kompatibel
+            baseUrl: baseURL.replaceAll('/api/',
+                '/api'), // hapus trailing slash kalau ada biar kompatibel
             token: token,
           );
         });
@@ -290,7 +291,10 @@ class _LeaderboardPageState extends State<LeaderboardPage>
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [ const Color.fromARGB(255, 8, 143, 78), const Color.fromARGB(255, 8, 143, 78)],
+              colors: [
+                Color.fromARGB(255, 8, 143, 78),
+                Color.fromARGB(255, 8, 143, 78)
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -313,7 +317,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(color: const Color.fromARGB(255, 8, 143, 78)))
+              child: CircularProgressIndicator(
+                  color: Color.fromARGB(255, 8, 143, 78)))
           : _errorMessage.isNotEmpty
               ? Center(
                   child: Column(
@@ -340,7 +345,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                       ElevatedButton(
                         onPressed: _loadLeaderboardData,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 8, 143, 78),
+                          backgroundColor:
+                              const Color.fromARGB(255, 8, 143, 78),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -367,7 +373,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: const BoxDecoration(
-                            color:  const Color.fromARGB(255, 8, 143, 78),
+                            color: Color.fromARGB(255, 8, 143, 78),
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(20),
                               bottomRight: Radius.circular(20),
@@ -393,7 +399,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black
-                                                    .withOpacity(0.2),
+                                                    .withValues(alpha: 0.2),
                                                 blurRadius: 8,
                                                 offset: const Offset(0, 4),
                                               ),
@@ -513,7 +519,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                                               ? LinearGradient(
                                                   colors: [
                                                     _getRankColor(index + 1)
-                                                        .withOpacity(0.2),
+                                                        .withValues(alpha: 0.2),
                                                     Colors.white,
                                                   ],
                                                   begin: Alignment.topLeft,
@@ -529,8 +535,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                                               BorderRadius.circular(12),
                                           boxShadow: [
                                             BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.2),
+                                              color: Colors.grey
+                                                  .withValues(alpha: 0.2),
                                               blurRadius: 4,
                                               offset: const Offset(0, 2),
                                             ),
@@ -604,8 +610,8 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold,
-                                                  color:
-                                                      const Color.fromARGB(255, 8, 143, 78),
+                                                  color: const Color.fromARGB(
+                                                      255, 8, 143, 78),
                                                 ),
                                               ),
                                             ),
@@ -626,7 +632,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     );
   }
 
- // Bottom Navigation Widget
+  // Bottom Navigation Widget
   Widget _buildBottomNavigation() {
     return Container(
       color: Colors.white, // tambahin ini biar latar belakangnya full putih
@@ -634,7 +640,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),
@@ -706,7 +712,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                 label: 'Akun',
               ),
             ],
-            selectedItemColor:const Color.fromARGB(255, 8, 143, 78),
+            selectedItemColor: const Color.fromARGB(255, 8, 143, 78),
             unselectedItemColor: Colors.grey[400],
             selectedLabelStyle: GoogleFonts.poppins(
               fontSize: 12,

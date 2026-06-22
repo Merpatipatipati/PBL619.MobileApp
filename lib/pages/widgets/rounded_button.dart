@@ -6,10 +6,10 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onBtnPressed;
 
   const RoundedButton({
-    Key? key,
+    super.key,
     required this.btnText,
     required this.onBtnPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

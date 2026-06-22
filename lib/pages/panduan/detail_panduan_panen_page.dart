@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart' as launcher;
 
 class DetailPanduanPanenPage extends StatefulWidget {
   final int idPanduan;
-  DetailPanduanPanenPage({super.key, required this.idPanduan});
+  const DetailPanduanPanenPage({super.key, required this.idPanduan});
 
   @override
   State<DetailPanduanPanenPage> createState() => _DetailPanduanPanenPageState();
@@ -151,7 +151,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              Colors.black.withOpacity(0.3),
+                              Colors.black.withValues(alpha: 0.3),
                             ],
                           ),
                         ),
@@ -181,13 +181,13 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                   horizontal: 16, vertical: 8),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(colors: [
-                                  const Color(0xFF29CC74).withOpacity(0.15),
-                                  const Color(0xFF20B863).withOpacity(0.15),
+                                  const Color(0xFF29CC74).withValues(alpha: 0.15),
+                                  const Color(0xFF20B863).withValues(alpha: 0.15),
                                 ]),
                                 borderRadius: BorderRadius.circular(24),
                                 border: Border.all(
                                     color: const Color(0xFF29CC74)
-                                        .withOpacity(0.4),
+                                        .withValues(alpha: 0.4),
                                     width: 1.5),
                               ),
                               child: Row(
@@ -233,7 +233,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Colors.black.withOpacity(0.06),
+                                      color: Colors.black.withValues(alpha: 0.06),
                                       blurRadius: 12,
                                       offset: const Offset(0, 4))
                                 ],
@@ -246,9 +246,9 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(colors: [
                                         const Color(0xFF29CC74)
-                                            .withOpacity(0.2),
+                                            .withValues(alpha: 0.2),
                                         const Color(0xFF20B863)
-                                            .withOpacity(0.2),
+                                            .withValues(alpha: 0.2),
                                       ]),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -275,12 +275,12 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.black.withOpacity(0.06),
+                                color: Colors.black.withValues(alpha: 0.06),
                                 spreadRadius: 0,
                                 blurRadius: 24,
                                 offset: const Offset(0, 12)),
                             BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
+                                color: Colors.black.withValues(alpha: 0.04),
                                 spreadRadius: 0,
                                 blurRadius: 12,
                                 offset: const Offset(0, 6)),
@@ -296,7 +296,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: Colors.black.withValues(alpha: 0.1),
                                       blurRadius: 12,
                                       offset: const Offset(0, 4))
                                 ],
@@ -315,9 +315,9 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                           end: Alignment.bottomRight,
                                           colors: [
                                             const Color(0xFF29CC74)
-                                                .withOpacity(0.8),
+                                                .withValues(alpha: 0.8),
                                             const Color(0xFF20B863)
-                                                .withOpacity(0.9),
+                                                .withValues(alpha: 0.9),
                                           ],
                                         ),
                                       ),
@@ -332,7 +332,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                                       .play_circle_outline_rounded,
                                                   size: 64,
                                                   color: Colors.white
-                                                      .withOpacity(0.9),
+                                                      .withValues(alpha: 0.9),
                                                 ),
                                               ),
                                             )
@@ -342,7 +342,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                                     .play_circle_outline_rounded,
                                                 size: 64,
                                                 color: Colors.white
-                                                    .withOpacity(0.9),
+                                                    .withValues(alpha: 0.9),
                                               ),
                                             ),
                                     ),
@@ -353,7 +353,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                           end: Alignment.bottomCenter,
                                           colors: [
                                             Colors.transparent,
-                                            Colors.black.withOpacity(0.3),
+                                            Colors.black.withValues(alpha: 0.3),
                                           ],
                                         ),
                                       ),
@@ -388,14 +388,14 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                           padding: const EdgeInsets.all(16),
                                           decoration: BoxDecoration(
                                             color:
-                                                Colors.white.withOpacity(0.95),
+                                                Colors.white.withValues(alpha: 0.95),
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                             boxShadow: [
                                               BoxShadow(
                                                   color: Colors.black
-                                                      .withOpacity(
-                                                          _isPlayButtonPressed
+                                                      .withValues(
+                                                          alpha: _isPlayButtonPressed
                                                               ? 0.3
                                                               : 0.2),
                                                   blurRadius:
@@ -449,7 +449,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
                                             horizontal: 8, vertical: 4),
                                         decoration: BoxDecoration(
                                             color:
-                                                Colors.black.withOpacity(0.8),
+                                                Colors.black.withValues(alpha: 0.8),
                                             borderRadius:
                                                 BorderRadius.circular(4)),
                                         child: Text('5:04',
@@ -544,7 +544,7 @@ class _DetailPanduanPanenPageState extends State<DetailPanduanPanenPage> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 20,
                 offset: const Offset(0, -5))
           ],

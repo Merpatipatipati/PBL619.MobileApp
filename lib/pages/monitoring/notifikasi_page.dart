@@ -248,7 +248,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:const Color.fromARGB(255, 8, 143, 78),
+        backgroundColor: const Color.fromARGB(255, 8, 143, 78),
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -290,7 +290,8 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                       ElevatedButton(
                         onPressed: _loadData,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 8, 143, 78),
+                          backgroundColor:
+                              const Color.fromARGB(255, 8, 143, 78),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -307,7 +308,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                   ),
                 )
               : RefreshIndicator(
-                color: const Color.fromARGB(255, 8, 143, 78),
+                  color: const Color.fromARGB(255, 8, 143, 78),
                   onRefresh: _loadData,
                   child: ListView(
                     children: [
@@ -373,7 +374,8 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                       borderRadius: BorderRadius.circular(12),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.grey.withOpacity(0.1),
+                                          color: Colors.grey
+                                              .withValues(alpha: 0.1),
                                           spreadRadius: 1,
                                           blurRadius: 3,
                                           offset: const Offset(0, 1),
@@ -381,7 +383,8 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                       ],
                                       border: !notification.dibaca
                                           ? Border.all(
-                                              color: const Color.fromARGB(255, 8, 143, 78),
+                                              color: const Color.fromARGB(
+                                                  255, 8, 143, 78),
                                               width: 1)
                                           : null,
                                     ),
@@ -394,7 +397,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
                                         decoration: BoxDecoration(
                                           color: _getStatusColor(
                                                   notification.status)
-                                              .withOpacity(0.2),
+                                              .withValues(alpha: 0.2),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
@@ -466,7 +469,7 @@ class _NotifikasiPageState extends State<NotifikasiPage> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

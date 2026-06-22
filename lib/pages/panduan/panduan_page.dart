@@ -188,14 +188,14 @@ class _PanduanPageState extends State<PanduanPage>
               // Primary shadow - reduced intensity
               BoxShadow(
                 color: const Color.fromARGB(255, 8, 143, 78)
-                    .withOpacity(isPressed ? 0.1 : 0.15),
+                    .withValues(alpha: isPressed ? 0.1 : 0.15),
                 spreadRadius: isPressed ? -2 : 0,
                 blurRadius: isPressed ? 15 : 25,
                 offset: Offset(0, isPressed ? 3 : 8),
               ),
               // Secondary shadow for depth
               BoxShadow(
-                color: Colors.black.withOpacity(isPressed ? 0.03 : 0.06),
+                color: Colors.black.withValues(alpha: isPressed ? 0.03 : 0.06),
                 spreadRadius: isPressed ? -1 : 0,
                 blurRadius: isPressed ? 8 : 15,
                 offset: Offset(0, isPressed ? 1 : 4),
@@ -210,7 +210,7 @@ class _PanduanPageState extends State<PanduanPage>
                 Stack(
                   children: [
                     // Main image
-                    Container(
+                    SizedBox(
                       height: 200,
                       width: double.infinity,
                       child: Image.asset(
@@ -239,7 +239,7 @@ class _PanduanPageState extends State<PanduanPage>
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            Colors.black.withOpacity(0.2),
+                            Colors.black.withValues(alpha: 0.2),
                           ],
                         ),
                       ),
@@ -254,10 +254,10 @@ class _PanduanPageState extends State<PanduanPage>
                           end: Alignment.bottomRight,
                           colors: [
                             const Color.fromARGB(255, 8, 143, 78)
-                                .withOpacity(0.08),
+                                .withValues(alpha: 0.08),
                             Colors.transparent,
                             const Color.fromARGB(255, 8, 143, 78)
-                                .withOpacity(0.12),
+                                .withValues(alpha: 0.12),
                           ],
                         ),
                       ),
@@ -271,16 +271,16 @@ class _PanduanPageState extends State<PanduanPage>
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.95),
+                          color: Colors.white.withValues(alpha: 0.95),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: const Color.fromARGB(255, 8, 143, 78)
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.3),
                             width: 1,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -379,7 +379,7 @@ class _PanduanPageState extends State<PanduanPage>
         boxShadow: [
           BoxShadow(
             color: const Color.fromARGB(255, 8, 143, 78)
-                .withOpacity(isCardPressed ? 0.2 : 0.3),
+                .withValues(alpha: isCardPressed ? 0.2 : 0.3),
             spreadRadius: 0,
             blurRadius: isCardPressed ? 4 : 8,
             offset: Offset(0, isCardPressed ? 1 : 3),
@@ -420,7 +420,7 @@ class _PanduanPageState extends State<PanduanPage>
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

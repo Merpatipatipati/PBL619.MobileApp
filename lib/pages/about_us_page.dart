@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsPage extends StatefulWidget {
-  const AboutUsPage({Key? key}) : super(key: key);
+  const AboutUsPage({super.key});
 
   @override
   State<AboutUsPage> createState() => _AboutUsPageState();
@@ -173,7 +173,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -199,7 +199,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: _primaryColor.withOpacity(0.1),
+            color: _primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, color: _primaryColor, size: 24),
@@ -224,7 +224,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.08),
+            color: Colors.grey.withValues(alpha: 0.08),
             spreadRadius: 0,
             blurRadius: 20,
             offset: const Offset(0, 4),
@@ -246,8 +246,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            _primaryColor.withOpacity(0.2),
-                            _primaryColor.withOpacity(0.1)
+                            _primaryColor.withValues(alpha: 0.2),
+                            _primaryColor.withValues(alpha: 0.1)
                           ],
                         ),
                         borderRadius: BorderRadius.circular(12),
@@ -293,8 +293,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            _primaryColor.withOpacity(0.2),
-                            _primaryColor.withOpacity(0.1)
+                            _primaryColor.withValues(alpha: 0.2),
+                            _primaryColor.withValues(alpha: 0.1)
                           ],
                         ),
                         borderRadius: BorderRadius.circular(12),
@@ -413,7 +413,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.08),
+                    color: Colors.grey.withValues(alpha: 0.08),
                     spreadRadius: 0,
                     blurRadius: 15,
                     offset: const Offset(0, 3),
@@ -429,7 +429,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       width: 52,
                       height: 52,
                       decoration: BoxDecoration(
-                        color: (feature['color'] as Color).withOpacity(0.1),
+                        color:
+                            (feature['color'] as Color).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(
@@ -495,7 +496,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.08),
+                color: Colors.grey.withValues(alpha: 0.08),
                 spreadRadius: 0,
                 blurRadius: 20,
                 offset: const Offset(0, 4),
@@ -519,8 +520,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            _primaryColor.withOpacity(0.15),
-                            _primaryColor.withOpacity(0.05)
+                            _primaryColor.withValues(alpha: 0.15),
+                            _primaryColor.withValues(alpha: 0.05)
                           ],
                         ),
                         borderRadius: BorderRadius.circular(12),
@@ -574,7 +575,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.08),
+                    color: Colors.grey.withValues(alpha: 0.08),
                     spreadRadius: 0,
                     blurRadius: 15,
                     offset: const Offset(0, 3),
@@ -589,7 +590,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: (member['color'] as Color).withOpacity(0.3),
+                          color:
+                              (member['color'] as Color).withValues(alpha: 0.3),
                           width: 2,
                         ),
                       ),
@@ -616,8 +618,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color:
-                                  (member['color'] as Color).withOpacity(0.1),
+                              color: (member['color'] as Color)
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -663,7 +665,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.08),
+                color: Colors.grey.withValues(alpha: 0.08),
                 spreadRadius: 0,
                 blurRadius: 20,
                 offset: const Offset(0, 4),
@@ -681,8 +683,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        _primaryColor.withOpacity(0.15),
-                        _primaryColor.withOpacity(0.05)
+                        _primaryColor.withValues(alpha: 0.15),
+                        _primaryColor.withValues(alpha: 0.05)
                       ],
                     ),
                     borderRadius: BorderRadius.circular(14),
@@ -722,8 +724,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        _primaryColor.withOpacity(0.15),
-                        _primaryColor.withOpacity(0.05)
+                        _primaryColor.withValues(alpha: 0.15),
+                        _primaryColor.withValues(alpha: 0.05)
                       ],
                     ),
                     borderRadius: BorderRadius.circular(14),
@@ -761,7 +763,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

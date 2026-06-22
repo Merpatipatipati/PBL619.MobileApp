@@ -24,6 +24,10 @@ import 'dart:async';
 import 'dart:math';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:application_hydrogami/pages/widgets/beranda/location_weather_widget.dart';
+import 'package:application_hydrogami/pages/widgets/beranda/plant_progress_card.dart';
+import 'package:application_hydrogami/pages/widgets/beranda/panduan_carousel_widget.dart';
+import 'package:application_hydrogami/pages/widgets/beranda/plant_history_widget.dart';
 
 class BerandaPage extends StatefulWidget {
   const BerandaPage({super.key});
@@ -1376,7 +1380,15 @@ class _BerandaPageState extends State<BerandaPage> {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  _buildLocationWeatherWidget(),
+                  LocationWeatherWidget(
+                    isLoadingLocation: _isLoadingLocation,
+                    currentLocation: _currentLocation,
+                    isLoadingWeather: _isLoadingWeather,
+                    weatherIcon: _weatherIcon,
+                    weatherColor: _weatherColor,
+                    currentWeather: _currentWeather,
+                    onRefresh: _getCurrentLocation,
+                  ),
                   const SizedBox(height: 15),
                   // Card for nutrient, water, and relays
                   Container(
@@ -1386,7 +1398,7 @@ class _BerandaPageState extends State<BerandaPage> {
                       children: [
                         Row(
                           children: [
-                            _buildInfoCard(
+                            PlantInfoCard(
                               'Tingkat Nutrisi',
                               '${_nutrientLevel.toStringAsFixed(1)}%',
                               Icons.water_drop_outlined,
@@ -1394,7 +1406,7 @@ class _BerandaPageState extends State<BerandaPage> {
                               'Optimal: 71.4-100%',
                             ),
                             const SizedBox(width: 15),
-                            _buildInfoCard(
+                            PlantInfoCard(
                               'Konsumsi Air',
                               '${_waterConsumption.toStringAsFixed(1)} L',
                               Icons.water,
@@ -1404,7 +1416,7 @@ class _BerandaPageState extends State<BerandaPage> {
                           ],
                         ),
                         const SizedBox(height: 15),
-                        _buildProgressCard(
+                        PlantProgressCard(
                           'Pertumbuhan Tanaman',
                           _growthPercentage,
                           const Color.fromARGB(255, 255, 255, 255),
@@ -1433,7 +1445,16 @@ class _BerandaPageState extends State<BerandaPage> {
               ),
               child: Column(
                 children: [
-                  _buildCarouselPanduan(),
+                  PanduanCarouselWidget(
+                    pageController: _pageController,
+                    currentSlide: _currentSlide,
+                    panduanData: _panduanData,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentSlide = index;
+                      });
+                    },
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: Container(
@@ -1526,7 +1547,7 @@ class _BerandaPageState extends State<BerandaPage> {
                                 children: [
                                   _buildPlantAgeItem(),
                                   const SizedBox(height: 10),
-                                  _buildSummaryItem(
+                                  SummaryItemWidget(
                                     'Air Terpakai Hari Ini', // Ubah label
                                     '${_waterConsumption.toStringAsFixed(1)} L', // Gunakan _waterConsumption
                                     Icons.water,
@@ -1559,7 +1580,7 @@ class _BerandaPageState extends State<BerandaPage> {
                     itemCount: _transactions.length,
                     itemBuilder: (context, index) {
                       final transaction = _transactions[index];
-                      return _buildTransactionItem(transaction);
+                      return TransactionItemWidget(activity: transaction);
                     },
                   ),
                 ],
@@ -1569,282 +1590,6 @@ class _BerandaPageState extends State<BerandaPage> {
         ),
       ),
       bottomNavigationBar: _buildBottomNavigation(),
-    );
-  }
-
-  // Info Card Widget
-  Widget _buildInfoCard(
-      String title, String value, IconData icon, Color color, String subtitle) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.zero,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Icon(icon, size: 20, color: color),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white.withOpacity(0.6),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Progress Card Widget
-  Widget _buildProgressCard(
-      String title, double value, Color color, IconData icon, String status,
-      {String? valueText}) {
-    return Padding(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(icon, size: 20, color: color),
-                  const SizedBox(width: 8),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  status,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: color,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: LinearProgressIndicator(
-              value: value,
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(color),
-              minHeight: 10,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Progress',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                valueText ?? '${(value * 100).toStringAsFixed(1)}%',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Location and Weather Widget
-  Widget _buildLocationWeatherWidget() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.location_on,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Lokasi Anda',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
-                      ),
-                      _isLoadingLocation
-                          ? Row(
-                              children: [
-                                const SizedBox(
-                                  width: 12,
-                                  height: 12,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  '...',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.9),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Text(
-                              _currentLocation,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 30,
-            width: 1,
-            color: Colors.white.withOpacity(0.5),
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                Icon(
-                  _weatherIcon,
-                  color: _weatherColor,
-                  size: 24,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Cuaca',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
-                      ),
-                      _isLoadingWeather
-                          ? Row(
-                              children: [
-                                const SizedBox(
-                                  width: 12,
-                                  height: 12,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  '...',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.9),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Text(
-                              _currentWeather,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.refresh,
-              color: Colors.white,
-              size: 20,
-            ),
-            onPressed: _getCurrentLocation,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-          ),
-        ],
-      ),
     );
   }
 
@@ -2128,50 +1873,6 @@ class _BerandaPageState extends State<BerandaPage> {
     );
   }
 
-  // Summary Item Widget
-  Widget _buildSummaryItem(String title, String amount, IconData icon,
-      {bool isConsumption = false}) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: isConsumption
-                ? Colors.blue.withOpacity(0.2)
-                : Colors.green.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: isConsumption ? Colors.blue : Colors.green,
-            size: 16,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.black54,
-              ),
-            ),
-            Text(
-              amount,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: isConsumption ? Colors.blue : Colors.green,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   // Time Filter Button Widget
   Widget _buildTimeFilterButton(String title) {
     final isSelected = _selectedTimeFrame == title;
@@ -2197,199 +1898,6 @@ class _BerandaPageState extends State<BerandaPage> {
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-      ),
-    );
-  }
-
-  // Carousel Widget
-  Widget _buildCarouselPanduan() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 180,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentSlide = index;
-                  });
-                },
-                itemCount: _panduanData.length,
-                itemBuilder: (context, index) {
-                  final panduan = _panduanData[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => panduan['page'],
-                        ),
-                      );
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(panduan['image']),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.8),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 20,
-                          left: 20,
-                          right: 20,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                panduan['title'],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                panduan['subtitle'],
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              _panduanData.length,
-              (index) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                width: _currentSlide == index ? 20 : 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: _currentSlide == index
-                      ? const Color.fromARGB(255, 8, 143, 78)
-                      : Colors.grey.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Transaction Item Widget
-  Widget _buildTransactionItem(Map<String, dynamic> activity) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: activity['color'].withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              activity['icon'],
-              color: activity['color'],
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  activity['title'],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  activity['date'],
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              activity['category'],
-              style: TextStyle(
-                color: Colors.grey[800],
-                fontSize: 12,
-              ),
-            ),
-          ),
-          const SizedBox(width: 15),
-          Text(
-            activity['category'] == 'Panen'
-                ? "${activity['amount'].toStringAsFixed(1)} kg"
-                : activity['category'] == 'Nutrisi'
-                    ? "${activity['amount'].toStringAsFixed(1)} L"
-                    : "pH ${activity['amount'].toStringAsFixed(1)}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: activity['isExpense'] ? Colors.blue : Colors.green,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -69,7 +69,7 @@ class LayananNotifikasi {
       if (response.statusCode == 200 && data != null && data['success']) {
         final List<dynamic> items = data['data'] ?? [];
         print('Parsed items: $items');
-        
+
         return items.map((item) => NotifikasiModel.fromJson(item)).toList();
       } else {
         throw Exception(data?['message'] ?? 'Gagal memuat notifikasi');
@@ -133,7 +133,8 @@ class LayananNotifikasi {
 
       return anyNotificationSent;
     } catch (e) {
-      if (debugMode) print('[NotifikasiService] Error generateNotifications: $e');
+      if (debugMode)
+        print('[NotifikasiService] Error generateNotifications: $e');
       return false;
     }
   }
@@ -170,7 +171,8 @@ class LayananNotifikasi {
   }
 
   // Tandai notifikasi sebagai sudah dibaca
-  static Future<bool> tandaiDibaca(String id) async { // Ubah parameter ke String
+  static Future<bool> tandaiDibaca(String id) async {
+    // Ubah parameter ke String
     try {
       final response = await http.put(
         Uri.parse('${baseURL}notifikasi/$id/read'),
@@ -186,7 +188,8 @@ class LayananNotifikasi {
   }
 
   // Hapus notifikasi tertentu
-  static Future<bool> hapusNotifikasi(String id) async { // Ubah parameter ke String
+  static Future<bool> hapusNotifikasi(String id) async {
+    // Ubah parameter ke String
     try {
       final response = await http.delete(
         Uri.parse('${baseURL}notifikasi/$id'),
@@ -219,7 +222,8 @@ class LayananNotifikasi {
       final data = _handleResponse(response);
       return response.statusCode == 200 && data != null && data['success'];
     } catch (e) {
-      if (debugMode) print('[NotifikasiService] Error hapusSemuaNotifikasi: $e');
+      if (debugMode)
+        print('[NotifikasiService] Error hapusSemuaNotifikasi: $e');
       return false;
     }
   }
@@ -239,7 +243,8 @@ class LayananNotifikasi {
       }
       return 0;
     } catch (e) {
-      if (debugMode) print('[NotifikasiService] Error hitungNotifikasiBelumDibaca: $e');
+      if (debugMode)
+        print('[NotifikasiService] Error hitungNotifikasiBelumDibaca: $e');
       return 0;
     }
   }

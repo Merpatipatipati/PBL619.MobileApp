@@ -432,7 +432,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 8, 143, 78)
-                                .withOpacity(0.1),
+                                .withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Icon(
@@ -495,12 +495,12 @@ class _GamifikasiPageState extends State<GamifikasiPage>
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.3),
+            color: const Color.fromARGB(255, 8, 143, 78).withValues(alpha: 0.3),
             width: 2,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -521,7 +521,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
@@ -588,7 +588,8 @@ class _GamifikasiPageState extends State<GamifikasiPage>
             Container(
               padding: const EdgeInsets.all(6), // Reduced padding
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 8, 143, 78).withOpacity(0.15),
+                color: const Color.fromARGB(255, 8, 143, 78)
+                    .withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8), // Smaller radius
               ),
               child: const Icon(
@@ -633,12 +634,12 @@ class _GamifikasiPageState extends State<GamifikasiPage>
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -654,7 +655,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                 Container(
                   padding: const EdgeInsets.all(10), // Reduced padding
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12), // Smaller radius
                   ),
                   child: Icon(
@@ -700,7 +701,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                     borderRadius: BorderRadius.circular(10), // Smaller radius
                     boxShadow: [
                       BoxShadow(
-                        color: color.withOpacity(0.3),
+                        color: color.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -735,7 +736,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
             padding:
                 const EdgeInsets.fromLTRB(16, 0, 16, 16), // Reduced padding
             decoration: BoxDecoration(
-              color: color.withOpacity(0.03),
+              color: color.withValues(alpha: 0.03),
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(18),
                 bottomRight: Radius.circular(18),
@@ -749,9 +750,9 @@ class _GamifikasiPageState extends State<GamifikasiPage>
                   data: SliderThemeData(
                     trackHeight: 6,
                     activeTrackColor: color,
-                    inactiveTrackColor: color.withOpacity(0.2),
+                    inactiveTrackColor: color.withValues(alpha: 0.2),
                     thumbColor: color,
-                    overlayColor: color.withOpacity(0.2),
+                    overlayColor: color.withValues(alpha: 0.2),
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 11,
                       elevation: 3,
@@ -823,7 +824,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -862,7 +863,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -901,7 +902,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -932,7 +933,7 @@ class _GamifikasiPageState extends State<GamifikasiPage>
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),

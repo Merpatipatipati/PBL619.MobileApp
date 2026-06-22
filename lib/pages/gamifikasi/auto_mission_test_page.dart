@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // AUTO MISSION TEST PAGE
 // ================================================
 class AutoMissionTestPage extends StatefulWidget {
-  const AutoMissionTestPage({Key? key}) : super(key: key);
+  const AutoMissionTestPage({super.key});
 
   @override
   State<AutoMissionTestPage> createState() => _AutoMissionTestPageState();
@@ -16,13 +16,13 @@ class AutoMissionTestPage extends StatefulWidget {
 
 class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
   static const String baseUrl = 'http://10.0.2.2:8000/api';
-  
+
   bool _isLoading = false;
   String _statusMessage = '';
   Color _statusColor = Colors.blue;
   String? _token;
   List<Map<String, dynamic>> _missions = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
     setState(() {
       _token = prefs.getString('token');
     });
-    
+
     if (_token != null) {
       _showMessage('✅ Token loaded', Colors.green);
       _loadAllMissions();
@@ -146,15 +146,17 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
     }
 
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/user/misi/auto'),
-        headers: {
-          'Authorization': 'Bearer $_token',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode(missionData),
-      ).timeout(const Duration(seconds: 10));
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/user/misi/auto'),
+            headers: {
+              'Authorization': 'Bearer $_token',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: jsonEncode(missionData),
+          )
+          .timeout(const Duration(seconds: 10));
 
       print('Response Status: ${response.statusCode}');
       print('Response Body: ${response.body}');
@@ -306,7 +308,8 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        _showMessage('✅ Cleaned: ${data['data']['total']} missions', Colors.green);
+        _showMessage(
+            '✅ Cleaned: ${data['data']['total']} missions', Colors.green);
         _loadAllMissions(); // Refresh list
       }
     } catch (e) {
@@ -341,14 +344,15 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
-              color: _statusColor.withOpacity(0.1),
+              color: _statusColor.withValues(alpha: 0.1),
               child: Row(
                 children: [
-                  Icon(_statusColor == Colors.green 
-                      ? Icons.check_circle 
-                      : _statusColor == Colors.red
-                          ? Icons.error
-                          : Icons.info,
+                  Icon(
+                    _statusColor == Colors.green
+                        ? Icons.check_circle
+                        : _statusColor == Colors.red
+                            ? Icons.error
+                            : Icons.info,
                     color: _statusColor,
                   ),
                   const SizedBox(width: 12),
@@ -385,11 +389,13 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: _token != null ? Colors.green.shade50 : Colors.red.shade50,
+                        color: _token != null
+                            ? Colors.green.shade50
+                            : Colors.red.shade50,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        _token != null 
+                        _token != null
                             ? '✅ Token: ${_token!.substring(0, 20)}...'
                             : '❌ No token. Please login.',
                         style: GoogleFonts.poppins(fontSize: 12),
@@ -461,9 +467,12 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                       runSpacing: 8,
                       children: [
                         _buildSmallButton('pH', () => _getActiveMission('pH')),
-                        _buildSmallButton('TDS', () => _getActiveMission('TDS')),
-                        _buildSmallButton('Temp', () => _getActiveMission('temperature')),
-                        _buildSmallButton('Humidity', () => _getActiveMission('humidity')),
+                        _buildSmallButton(
+                            'TDS', () => _getActiveMission('TDS')),
+                        _buildSmallButton(
+                            'Temp', () => _getActiveMission('temperature')),
+                        _buildSmallButton(
+                            'Humidity', () => _getActiveMission('humidity')),
                       ],
                     ),
                   ),
@@ -503,8 +512,9 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                             itemCount: _missions.length,
                             itemBuilder: (context, index) {
                               final mission = _missions[index];
-                              final isAuto = mission['is_auto_generated'] == true;
-                              
+                              final isAuto =
+                                  mission['is_auto_generated'] == true;
+
                               return Card(
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: ListTile(
@@ -520,11 +530,13 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                                     ),
                                   ),
                                   subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         mission['deskripsi_misi'] ?? '',
-                                        style: GoogleFonts.poppins(fontSize: 11),
+                                        style:
+                                            GoogleFonts.poppins(fontSize: 11),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -535,17 +547,22 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 6, vertical: 2),
                                             decoration: BoxDecoration(
-                                              color: isAuto 
-                                                  ? Colors.blue.withOpacity(0.2)
-                                                  : Colors.grey.withOpacity(0.2),
-                                              borderRadius: BorderRadius.circular(4),
+                                              color: isAuto
+                                                  ? Colors.blue
+                                                      .withValues(alpha: 0.2)
+                                                  : Colors.grey
+                                                      .withValues(alpha: 0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
                                             ),
                                             child: Text(
                                               isAuto ? 'AUTO' : 'MANUAL',
                                               style: GoogleFonts.poppins(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.bold,
-                                                color: isAuto ? Colors.blue : Colors.grey,
+                                                color: isAuto
+                                                    ? Colors.blue
+                                                    : Colors.grey,
                                               ),
                                             ),
                                           ),
@@ -564,7 +581,8 @@ class _AutoMissionTestPageState extends State<AutoMissionTestPage> {
                                   ),
                                   trailing: mission['status_misi'] != 'selesai'
                                       ? IconButton(
-                                          icon: const Icon(Icons.check_circle_outline),
+                                          icon: const Icon(
+                                              Icons.check_circle_outline),
                                           color: const Color(0xFF24D17E),
                                           onPressed: () => _completeMission(
                                               mission['id_misi']),
