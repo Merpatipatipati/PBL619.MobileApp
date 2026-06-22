@@ -5,7 +5,6 @@ import '../models/sensor_data_model.dart';
 import 'package:application_hydrogami/services/globals.dart';
 
 class SensorDataService {
-
   Future<bool> sendSensorData(SensorData data) async {
     try {
       final jsonData = data.toJson();

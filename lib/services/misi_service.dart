@@ -21,28 +21,30 @@ class MisiService {
   Future<List<Misi>> getAllMisi() async {
     try {
       print('Fetching missions from: $userBaseUrl/misi');
-      
-      final response = await http.get(
-        Uri.parse('$userBaseUrl/misi'),
-        headers: await _getHeaders(),
-      );
-      
+
+      final response = await http
+          .get(
+            Uri.parse('$userBaseUrl/misi'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
+
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
-      
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
+
         // Periksa struktur response
         if (!data.containsKey('data')) {
           throw Exception('Response tidak memiliki field data');
         }
-        
+
         List<dynamic> results = data['data'];
         print('Found ${results.length} missions');
-        
+
         List<Misi> misiList = [];
-        
+
         for (int i = 0; i < results.length; i++) {
           try {
             print('Processing mission $i: ${results[i]}');
@@ -56,10 +58,9 @@ class MisiService {
             continue;
           }
         }
-        
+
         print('Successfully loaded ${misiList.length} missions');
         return misiList;
-        
       } else {
         print('HTTP Error: ${response.statusCode}');
         print('Error body: ${response.body}');
@@ -74,25 +75,28 @@ class MisiService {
   Future<Misi> getMisiDetail(int idMisi) async {
     try {
       print('Fetching mission detail for ID: $idMisi');
-      
-      final response = await http.get(
-        Uri.parse('$userBaseUrl/misi/$idMisi'),
-        headers: await _getHeaders(),
-      );
-      
+
+      final response = await http
+          .get(
+            Uri.parse('$userBaseUrl/misi/$idMisi'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
+
       print('Detail response status: ${response.statusCode}');
       print('Detail response body: ${response.body}');
-      
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
+
         if (!data.containsKey('data')) {
           throw Exception('Response tidak memiliki field data');
         }
-        
+
         return Misi.fromJson(data['data']);
       } else {
-        throw Exception('Failed to load mission details: HTTP ${response.statusCode}');
+        throw Exception(
+            'Failed to load mission details: HTTP ${response.statusCode}');
       }
     } catch (e) {
       print('Exception in getMisiDetail: $e');
@@ -104,11 +108,13 @@ class MisiService {
   Future<bool> completeMission(int missionId) async {
     try {
       print('Completing mission ID: $missionId');
-      
-      final response = await http.post(
-        Uri.parse('$userBaseUrl/misi/$missionId/complete'),
-        headers: await _getHeaders(),
-      );
+
+      final response = await http
+          .post(
+            Uri.parse('$userBaseUrl/misi/$missionId/complete'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       print('Complete mission response status: ${response.statusCode}');
       print('Complete mission response body: ${response.body}');
@@ -133,14 +139,16 @@ class MisiService {
   Future<bool> cleanupExpiredMissions() async {
     try {
       print('Cleaning up expired missions...');
-      
-      final response = await http.delete(
-        Uri.parse('$userBaseUrl/misi/auto/cleanup'),
-        headers: await _getHeaders(),
-      );
+
+      final response = await http
+          .delete(
+            Uri.parse('$userBaseUrl/misi/auto/cleanup'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       print('Cleanup response status: ${response.statusCode}');
-      
+
       if (response.statusCode == 200) {
         final result = json.decode(response.body);
         print('Cleanup result: ${result['message']}');
@@ -159,14 +167,16 @@ class MisiService {
   Future<Misi?> getActiveMissionByParameter(String parameter) async {
     try {
       print('Fetching active mission for parameter: $parameter');
-      
-      final response = await http.get(
-        Uri.parse('$userBaseUrl/misi/active?parameter=$parameter'),
-        headers: await _getHeaders(),
-      );
+
+      final response = await http
+          .get(
+            Uri.parse('$userBaseUrl/misi/active?parameter=$parameter'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       print('Active mission response status: ${response.statusCode}');
-      
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true && data['data'] != null) {
@@ -187,7 +197,7 @@ class MisiService {
   Future<bool> createAutoMission(Map<String, dynamic> missionData) async {
     try {
       print('Creating auto mission: $missionData');
-      
+
       final response = await http.post(
         Uri.parse('$userBaseUrl/misi/auto'),
         headers: await _getHeaders(),
@@ -213,24 +223,29 @@ class MisiService {
   // Method tambahan untuk testing koneksi
   Future<bool> testConnection() async {
     try {
-      final response = await http.get(
-        Uri.parse('$userBaseUrl/misi'),
-        headers: await _getHeaders(),
-      ).timeout(const Duration(seconds: 10));
-      
+      final response = await http
+          .get(
+            Uri.parse('$userBaseUrl/misi'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
+
       return response.statusCode == 200;
     } catch (e) {
       print('Connection test failed: $e');
       return false;
     }
   }
+
   Future<List<MisiProgress>> getUserProgress() async {
     try {
       print('Fetching user mission progress...');
-      final response = await http.get(
-        Uri.parse('$userBaseUrl/misi/progress'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .get(
+            Uri.parse('$userBaseUrl/misi/progress'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
       print('Progress response status: ${response.statusCode}');
 
       if (response.statusCode == 200) {
@@ -253,40 +268,45 @@ class MisiService {
   // Reset progress satu misi (untuk testing)
   Future<bool> resetProgress(int idMisi) async {
     try {
-      final response = await http.post(
-        Uri.parse('$userBaseUrl/misi/$idMisi/reset'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .post(
+            Uri.parse('$userBaseUrl/misi/$idMisi/reset'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
       return response.statusCode == 200;
     } catch (e) {
       print('Error resetting progress: $e');
       return false;
     }
   }
+
   Future<Map<String, dynamic>> claimMisi(int idMisi) async {
-  try {
-    final response = await http.post(
-      Uri.parse('$userBaseUrl/misi/$idMisi/claim'),
-      headers: await _getHeaders(),
-    );
+    try {
+      final response = await http
+          .post(
+            Uri.parse('$userBaseUrl/misi/$idMisi/claim'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
-    final data = jsonDecode(response.body);
+      final data = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
-      return {
-        'success':      true,
-        'message':      data['message'],
-        'poin_didapat': data['data']['poin_didapat'],
-        'total_poin':   data['data']['total_poin'],
-      };
-    } else {
-      return {
-        'success': false,
-        'message': data['message'] ?? 'Gagal klaim misi',
-      };
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'message': data['message'],
+          'poin_didapat': data['data']['poin_didapat'],
+          'total_poin': data['data']['total_poin'],
+        };
+      } else {
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Gagal klaim misi',
+        };
+      }
+    } catch (e) {
+      return {'success': false, 'message': 'Error: $e'};
     }
-  } catch (e) {
-    return {'success': false, 'message': 'Error: $e'};
   }
-}
 }

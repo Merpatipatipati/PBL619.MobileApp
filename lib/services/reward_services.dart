@@ -44,7 +44,8 @@ class RewardService {
         List<dynamic> data = json.decode(response.body)['data'];
         return data.map((json) => Reward.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load redeem rewards: ${response.statusCode}');
+        throw Exception(
+            'Failed to load redeem rewards: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Failed to load redeem rewards: $e');

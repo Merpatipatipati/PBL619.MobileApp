@@ -56,10 +56,12 @@ class LayananNotifikasi {
   static Future<List<NotifikasiModel>> ambilNotifikasi() async {
     try {
       debugPrint('Mengambil notifikasi dari ${baseURL}notifikasi');
-      final response = await http.get(
-        Uri.parse('${baseURL}notifikasi'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .get(
+            Uri.parse('${baseURL}notifikasi'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');
@@ -83,10 +85,12 @@ class LayananNotifikasi {
   // Ambil data sensor
   static Future<List<Map<String, dynamic>>> ambilDataSensor() async {
     try {
-      final response = await http.get(
-        Uri.parse('${baseURL}sensor_data'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .get(
+            Uri.parse('${baseURL}sensor_data'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       final data = _handleResponse(response);
 
@@ -174,10 +178,12 @@ class LayananNotifikasi {
   static Future<bool> tandaiDibaca(String id) async {
     // Ubah parameter ke String
     try {
-      final response = await http.put(
-        Uri.parse('${baseURL}notifikasi/$id/read'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .put(
+            Uri.parse('${baseURL}notifikasi/$id/read'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       final data = _handleResponse(response);
       return response.statusCode == 200 && data != null && data['success'];
@@ -191,10 +197,12 @@ class LayananNotifikasi {
   static Future<bool> hapusNotifikasi(String id) async {
     // Ubah parameter ke String
     try {
-      final response = await http.delete(
-        Uri.parse('${baseURL}notifikasi/$id'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .delete(
+            Uri.parse('${baseURL}notifikasi/$id'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       final data = _handleResponse(response);
       return response.statusCode == 200 && data != null && data['success'];
@@ -209,10 +217,12 @@ class LayananNotifikasi {
     try {
       if (debugMode) print('[NotifikasiService] Menghapus semua notifikasi...');
 
-      final response = await http.delete(
-        Uri.parse('${baseURL}notifikasi'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .delete(
+            Uri.parse('${baseURL}notifikasi'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       if (debugMode) {
         print('[NotifikasiService] Response status: ${response.statusCode}');
@@ -231,10 +241,12 @@ class LayananNotifikasi {
   // Hitung notifikasi yang belum dibaca
   static Future<int> hitungNotifikasiBelumDibaca() async {
     try {
-      final response = await http.get(
-        Uri.parse('${baseURL}notifikasi/unread-count'),
-        headers: await _getHeaders(),
-      );
+      final response = await http
+          .get(
+            Uri.parse('${baseURL}notifikasi/unread-count'),
+            headers: await _getHeaders(),
+          )
+          .timeout(const Duration(seconds: 10));
 
       final data = _handleResponse(response);
 

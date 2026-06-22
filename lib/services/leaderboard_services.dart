@@ -4,7 +4,7 @@ import '../models/leaderboard_model.dart';
 
 class LeaderboardService {
   final String baseUrl;
-  final String? token; 
+  final String? token;
 
   LeaderboardService({
     required this.baseUrl,
@@ -28,9 +28,12 @@ class LeaderboardService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
-      return jsonData.map((userJson) => LeaderboardUser.fromJson(userJson)).toList();
+      return jsonData
+          .map((userJson) => LeaderboardUser.fromJson(userJson))
+          .toList();
     } else {
-      throw Exception('Failed to load leaderboard: ${response.statusCode} - ${response.body}');
+      throw Exception(
+          'Failed to load leaderboard: ${response.statusCode} - ${response.body}');
     }
   }
 }

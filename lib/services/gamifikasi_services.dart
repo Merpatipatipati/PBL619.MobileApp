@@ -21,7 +21,8 @@ class GamificationService {
       final jsonData = json.decode(response.body);
       return GamificationModel.fromJson(jsonData);
     } else {
-      throw Exception('Failed to load gamification data: ${response.statusCode}');
+      throw Exception(
+          'Failed to load gamification data: ${response.statusCode}');
     }
   }
 
